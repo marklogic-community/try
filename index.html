@@ -10,7 +10,7 @@
         <a class="goToLine xq1-1-2">Highlight lines 1 through 2</a><br/>
         <a class="goToLine xq1-3">Highlight line 3</a>
     </p>
-    <textarea id="xq1" class="code input-xquery output-xml" style="height:100px">
+    <textarea id="xq1" class="code input-xquery output-xml">
 &lt;uris&gt;{
     for $i in collection()
     return &lt;uri&gt;{ base-uri($i) }&lt;/uri&gt;
@@ -18,7 +18,7 @@
     </textarea>
 
     <p>XQuery with execution and HTML output.</p>
-    <textarea id="xq2" class="code input-xquery output-html" style="height:100px">
+    <textarea id="xq2" class="code input-xquery output-html">
 &lt;ul&gt;{
     for $i in collection()
     return &lt;li&gt;{ base-uri($i) }&lt;/li&gt;
@@ -26,14 +26,14 @@
     </textarea>
 
     <p>XML output only and ready only</p>
-    <textarea class="code input-xml readonly" style="height:100px">
+    <textarea class="code input-xml readonly">
 &lt;foo&gt;
     &lt;bar&gt;baz&lt;/bar&gt;
 &lt;/foo&gt;
     </textarea>
 
     <p>Javascript/JSON output only yet editable</p>
-    <textarea class="code input-javascript" style="height:100px">
+    <textarea class="code input-javascript">
 {
     "foo": 1 
 }

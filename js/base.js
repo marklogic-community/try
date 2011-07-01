@@ -27,7 +27,7 @@ tryml.blockToParserConfig = function(block, type) {
         config.reindentOnLoad = true;
     }
     else if(type === "input") {
-        config.height = block.height() + "px";
+        config.height = "dynamic";
     }
 
     if(block.hasClass("readonly") || type === "output") {
