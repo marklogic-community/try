@@ -31,6 +31,9 @@ limitations under the License.
 xquery version "1.0-ml";
 
 module namespace json="http://marklogic.com/json";
+
+import module namespace dateparser="http://marklogic.com/dateparser" at "date-parser.xqy";
+
 declare default function namespace "http://www.w3.org/2005/xpath-functions";
 
 (:
@@ -51,16 +54,24 @@ declare default function namespace "http://www.w3.org/2005/xpath-functions";
         json:jsonToXML('{"foo": "bar"}')
 :)
 declare function json:jsonToXML(
-    $json as xs:string
+    $json as xs:string,
+    $enableExtensions as xs:boolean
 ) as element(json:json)
 {
     let $tokens := json:tokenize($json)
-    let $value := json:parseValue($tokens, 1)
+    let $value := json:parseValue($tokens, 1, (), $enableExtensions)
     let $test :=
-        if(xs:integer($value/@position) != fn:count($tokens) + 1)
+        if(xs:integer($value/@position) != count($tokens) + 1)
         then json:outputError($tokens, xs:integer($value/@position), "Unhandled tokens")
         else ()
     return <json:json>{ $value/(@type, @boolean), $value/node() }</json:json>
+};
+
+declare function json:jsonToXML(
+    $json as xs:string
+) as element(json:json)
+{
+    json:jsonToXML($json, true())
 };
 
 (:
@@ -78,7 +89,7 @@ declare function json:xmlToJSON(
     $element as element()
 ) as xs:string
 {
-    fn:string-join(json:processElement($element), "")
+    string-join(json:processElement($element), "")
 };
 
 (:
@@ -221,6 +232,41 @@ declare function json:a(
 };
 
 (:
+    Because JSON doesn't have a date datatype, we have to do some special
+    things. This function will accept either an xs:dateTime, xs:date or a date
+    string.  In the case of a date string, an attempt will be made to parse the
+    string into an xs:dateTime.  If the string cannot be parsed an error is thrown.
+:)
+declare function json:date(
+    $value as xs:anySimpleType
+) as element(json:item)
+{
+    let $value :=
+        if($value instance of xs:dateTime or $value instance of xs:date)
+        then string($value)
+        else if($value instance of xs:string)
+        then $value
+        else error(xs:QName("json:INVALID-DATE"), concat("Invalid date: ", xdmp:quote($value)))
+    let $date := dateparser:parse($value)
+    return
+        if(empty($date))
+        then error(xs:QName("json:INVALID-DATE"), concat("Invalid date: ", $value))
+        else <json:item normalized-date="{ $date }" type="date">{ $value }</json:item>
+};
+
+(:
+    Because JSON doesn't have an xml datatype, we have to do some special
+    things to get it to work.  When serialized out as JSON the xml will appear
+    as a string but internally it is represented as an xml tree.
+:)
+declare function json:xml(
+    $value as element()
+) as element(json:item)
+{
+    <json:item type="xml">{ xdmp:quote($value) }</json:item>
+};
+
+(:
     Because XQuery doesn't have a stict null value, this function allows us to
     construct a JSON null. This can be useful if you need objects or arrays
     with null values.
@@ -236,6 +282,33 @@ declare function json:null(
 };
 
 
+(: Search functions :)
+
+declare function json:rangeIndexValues(
+    $rangeDefinition as element(json:item),
+    $query as cts:query?,
+    $options as xs:string*,
+    $limit as xs:integer?
+) as xs:anyAtomicType*
+{
+    let $options := (
+        if(exists($limit))
+        then concat("limit=", $limit)
+        else (),
+        $options
+    )
+    let $key := xs:QName(concat("json:", json:escapeNCName($rangeDefinition/json:key)))
+    return
+        if($rangeDefinition/json:type = "date")
+        then cts:element-attribute-values($key, xs:QName("normalized-date"), (), ("type=dateTime", $options), $query)
+        else if($rangeDefinition/json:type = "string")
+        then cts:element-values($key, (), ("type=string", $options), $query)
+        else if($rangeDefinition/json:type = "number")
+        then cts:element-values($key, (), ("type=decimal", $options), $query)
+        else ()
+};
+
+
 (:
     Private functions
 :)
@@ -248,49 +321,68 @@ declare private function json:untypedToJSONType(
         then
             if($value instance of element(json:item) or $value instance of element(json:json))
             then $value/(@*, node())
+
             else if($value instance of xs:boolean and $value = true())
             then attribute boolean { "true" }
             else if($value instance of xs:boolean and $value = false())
             then attribute boolean { "false" }
+
             else if($value instance of xs:integer or $value instance of xs:decimal)
             then (attribute type { "number" }, string($value))
+
             else if($value instance of xs:string)
             then (attribute type { "string" }, string($value))
+
             else (attribute type { "string" }, xdmp:quote($value))
         else attribute type { "null" }
     }</json:item>
 };
 
-declare private function json:processElement(
-    $element as element()
-) as xs:string*
-{
-    if($element/@type = "object") then json:outputObject($element)
-    else if($element/@type = "array") then json:outputArray($element)
-    else if($element/@type = "null") then "null"
-    else if(fn:exists($element/@boolean)) then xs:string($element/@boolean)
-    else if($element/@type = "number") then xs:string($element)
-    else ('"', json:escapeJSONString($element), '"')
-};
-
 declare private function json:parseValue(
     $tokens as element(token)*,
-    $position as xs:integer
+    $position as xs:integer,
+    $castAs as xs:string?,
+    $enableExtensions as xs:boolean
 ) as element(value)
 {
     let $token := $tokens[$position]
     let $value :=
         if($token/@t = "lbrace")
-        then json:parseObject($tokens, $position + 1)
+        then json:parseObject($tokens, $position + 1, $enableExtensions)
 
         else if($token/@t = "lsquare")
-        then json:parseArray($tokens, $position + 1)
+        then json:parseArray($tokens, $position + 1, $castAs, $enableExtensions)
 
         else if($token/@t = "number")
-        then <value type="number" position="{ $position + 1 }">{ fn:string($token) }</value>
+        then <value type="number" position="{ $position + 1 }">{ string($token) }</value>
 
         else if($token/@t = "string")
-        then <value type="string" position="{ $position + 1 }">{ json:unescapeJSONString($token) }</value>
+        then
+            let $string := json:unescapeJSONString($token)
+            return
+                if(empty($castAs) or $enableExtensions = false())
+                then <value type="string" position="{ $position + 1 }">{ $string }</value>
+                else if($castAs = "xml")
+                then <value type="xml" position="{ $position + 1 }">{
+                    try {
+                        xdmp:unquote($string)
+                    }
+                    catch ($e) {
+                        json:outputError($tokens, $position, "The string was told to be treated as XML however, it isn't valid XML")
+                    }
+                }</value>
+                else if($castAs = "date")
+                then <value type="date" position="{ $position + 1 }">{
+                    let $parsed := dateparser:parse($string)
+                    return
+                        if(exists($parsed))
+                        then (
+                            attribute normalized-date { $parsed },
+                            $string
+                        )
+                        else json:outputError($tokens, $position, concat("The string ", $string, " was told to be treated as a date however, it couldn't be parsed"))
+                }</value>
+                else <value type="string" position="{ $position + 1 }">{ $string }</value>
 
         else if($token/@t = "true" or $token/@t = "false")
         then <value boolean="{ $token }" position="{ $position + 1 }"/>
@@ -305,19 +397,21 @@ declare private function json:parseValue(
 
 declare private function json:parseArray(
     $tokens as element(token)*,
-    $position as xs:integer
+    $position as xs:integer,
+    $castAs as xs:string?,
+    $enableExtensions as xs:boolean
 ) as element(value)
 {
     let $finalLocation := $position
     let $items :=
-        let $foundClosingBracket := fn:false()
+        let $foundClosingBracket := false()
 
-        for $index in ($position to fn:count($tokens))
-        where $foundClosingBracket = fn:false() and $index >= $finalLocation
+        for $index in ($position to count($tokens))
+        where $foundClosingBracket = false() and $index >= $finalLocation
         return
             if($tokens[$index]/@t = "rsquare")
             then (
-                xdmp:set($foundClosingBracket, fn:true()),
+                xdmp:set($foundClosingBracket, true()),
                 xdmp:set($finalLocation, $index + 1)
             )
 
@@ -326,17 +420,18 @@ declare private function json:parseArray(
 
             else
                 let $test := json:shouldBeOneOf($tokens, $index, ("lbrace", "lsquare", "string", "number", "true", "false", "null"), "Expected an array, object, string, number, boolean or null")
-                let $value := json:parseValue($tokens, $index)
+                let $value := json:parseValue($tokens, $index, $castAs, $enableExtensions)
                 let $set := xdmp:set($finalLocation, xs:integer($value/@position))
                 let $test := json:shouldBeOneOf($tokens, $finalLocation, ("comma", "rsquare"), "Expected either a comma or closing array")
-                return <json:item>{ $value/(@type, @boolean), $value/node() }</json:item>
+                return <json:item>{ $value/(@type, @boolean, @normalized-date), $value/node() }</json:item>
 
     return <value type="array" position="{ $finalLocation }">{ $items }</value>
 };
 
 declare private function json:parseObject(
     $tokens as element(token)*,
-    $position as xs:integer
+    $position as xs:integer,
+    $enableExtensions as xs:boolean
 ) as element(value)
 {
     if($tokens[$position + 1]/@t = "rbrace")
@@ -345,14 +440,14 @@ declare private function json:parseObject(
 
     let $finalLocation := $position
     let $items :=
-        let $foundClosingBrace := fn:false()
+        let $foundClosingBrace := false()
 
-        for $index in ($position to fn:count($tokens))
-        where $foundClosingBrace = fn:false() and $index >= $finalLocation
+        for $index in ($position to count($tokens))
+        where $foundClosingBrace = false() and $index >= $finalLocation
         return
             if($tokens[$index]/@t = "rbrace")
             then (
-                xdmp:set($foundClosingBrace, fn:true()),
+                xdmp:set($foundClosingBrace, true()),
                 xdmp:set($finalLocation, $index + 1)
             )
 
@@ -365,11 +460,12 @@ declare private function json:parseObject(
                 let $test := json:shouldBeOneOf($tokens, $index + 2, ("lbrace", "lsquare", "string", "number", "true", "false", "null"), "Expected an array, object, string, number, boolean or null")
 
                 let $key := json:escapeNCName($tokens[$index])
-                let $value := json:parseValue($tokens, $index + 2)
+                let $castAs := json:castAs($tokens[$index], $enableExtensions)
+                let $value := json:parseValue($tokens, $index + 2, $castAs, $enableExtensions)
                 let $set := xdmp:set($finalLocation, xs:integer($value/@position))
                 let $test := json:shouldBeOneOf($tokens, $finalLocation, ("comma", "rbrace"), "Expected either a comma or closing object")
 
-                return element { xs:QName(concat("json:", $key)) } { $value/(@type, @boolean), $value/node() }
+                return element { xs:QName(concat("json:", $key)) } { $value/(@type, @boolean, @normalized-date), $value/node() }
 
     return <value type="object" position="{ $finalLocation }">{ $items }</value>
 };
@@ -393,30 +489,30 @@ declare private function json:outputError(
     $expectedMessage as xs:string
 ) as empty-sequence()
 {
-    let $context := fn:string-join(
+    let $context := string-join(
         let $contextTokens := $tokens[$index - 3 to $index + 4]
         let $valueTokenTypes := ("string", "number", "true", "false", "null")
         for $token at $loc in $contextTokens
         let $value :=
             if($token/@t = "string")
-            then fn:concat('"', fn:string($token), '"')
-            else fn:string($token)
+            then concat('"', string($token), '"')
+            else string($token)
         return
             if($token/@t = ("comma", "colon"))
-            then fn:concat($value, " ")
+            then concat($value, " ")
             else if($token/@t = $valueTokenTypes and $contextTokens[$loc + 1]/@t = $valueTokenTypes)
-            then fn:concat($value, " ")
+            then concat($value, " ")
             else $value
     , "")
-    return fn:error(xs:QName("json:PARSE01"), fn:concat("Unexpected token ", fn:string($tokens[$index]/@t), ": '", $context, "'. ", $expectedMessage))
+    return error(xs:QName("json:PARSE01"), concat("Unexpected token ", string($tokens[$index]/@t), ": '", $context, "'. ", $expectedMessage))
 };
 
 declare private function json:unescapeJSONString($val as xs:string)
   as xs:string
 {
-    fn:string-join(
+    string-join(
         let $regex := '[^\\]+|(\\")|(\\\\)|(\\/)|(\\b)|(\\f)|(\\n)|(\\r)|(\\t)|(\\u[A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9])'
-        for $match in fn:analyze-string($val, $regex)/*
+        for $match in analyze-string($val, $regex)/*
         return 
             if($match/*:group/@nr = 1) then """"
             else if($match/*:group/@nr = 2) then "\"
@@ -426,8 +522,8 @@ declare private function json:unescapeJSONString($val as xs:string)
             else if($match/*:group/@nr = 6) then "&#x0A;"
             else if($match/*:group/@nr = 7) then "&#x0D;"
             else if($match/*:group/@nr = 8) then "&#x09;"
-            else if($match/*:group/@nr = 9) then fn:codepoints-to-string(xdmp:hex-to-integer(fn:substring($match, 3)))
-            else fn:string($match)
+            else if($match/*:group/@nr = 9) then codepoints-to-string(xdmp:hex-to-integer(substring($match, 3)))
+            else string($match)
     , "")
 };
 
@@ -438,26 +534,26 @@ declare private function json:tokenize(
     let $tokens := ("\{", "\}", "\[", "\]", ":", ",", "true", "false", "null", "\s+",
         '"([^"\\]|\\"|\\\\|\\/|\\b|\\f|\\n|\\r|\\t|\\u[A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9])*"',
         "-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][+-]?[0-9]+)?")
-    let $regex := fn:string-join(for $t in $tokens return fn:concat("(",$t,")"),"|")
-    for $match in fn:analyze-string($json, $regex)/*
+    let $regex := string-join(for $t in $tokens return concat("(",$t,")"),"|")
+    for $match in analyze-string($json, $regex)/*
     return
-        if($match/self::*:non-match) then json:createToken("error", fn:string($match))
-        else if($match/*:group/@nr = 1) then json:createToken("lbrace", fn:string($match))
-        else if($match/*:group/@nr = 2) then json:createToken("rbrace", fn:string($match))
-        else if($match/*:group/@nr = 3) then json:createToken("lsquare", fn:string($match))
-        else if($match/*:group/@nr = 4) then json:createToken("rsquare", fn:string($match))
-        else if($match/*:group/@nr = 5) then json:createToken("colon", fn:string($match))
-        else if($match/*:group/@nr = 6) then json:createToken("comma", fn:string($match))
-        else if($match/*:group/@nr = 7) then json:createToken("true", fn:string($match))
-        else if($match/*:group/@nr = 8) then json:createToken("false", fn:string($match))
-        else if($match/*:group/@nr = 9) then json:createToken("null", fn:string($match))
+        if($match/self::*:non-match) then json:createToken("error", string($match))
+        else if($match/*:group/@nr = 1) then json:createToken("lbrace", string($match))
+        else if($match/*:group/@nr = 2) then json:createToken("rbrace", string($match))
+        else if($match/*:group/@nr = 3) then json:createToken("lsquare", string($match))
+        else if($match/*:group/@nr = 4) then json:createToken("rsquare", string($match))
+        else if($match/*:group/@nr = 5) then json:createToken("colon", string($match))
+        else if($match/*:group/@nr = 6) then json:createToken("comma", string($match))
+        else if($match/*:group/@nr = 7) then json:createToken("true", string($match))
+        else if($match/*:group/@nr = 8) then json:createToken("false", string($match))
+        else if($match/*:group/@nr = 9) then json:createToken("null", string($match))
         else if($match/*:group/@nr = 10) then () (:ignore whitespace:)
         else if($match/*:group/@nr = 11) then
-            let $v := fn:string($match)
-            let $len := fn:string-length($v)
-            return json:createToken("string", fn:substring($v, 2, $len - 2))
-        else if($match/*:group/@nr = 13) then json:createToken("number", fn:string($match))
-        else json:createToken("error", fn:string($match))
+            let $v := string($match)
+            let $len := string-length($v)
+            return json:createToken("string", substring($v, 2, $len - 2))
+        else if($match/*:group/@nr = 13) then json:createToken("number", string($match))
+        else json:createToken("error", string($match))
 };
 
 declare private function json:createToken(
@@ -471,6 +567,19 @@ declare private function json:createToken(
 
 
 
+declare private function json:processElement(
+    $element as element()
+) as xs:string*
+{
+    if($element/@type = "object") then json:outputObject($element)
+    else if($element/@type = "array") then json:outputArray($element)
+    else if($element/@type = "null") then "null"
+    else if(exists($element/@boolean)) then xs:string($element/@boolean)
+    else if($element/@type = "number") then xs:string($element)
+    else if($element/@type = "xml") then ('"', json:escapeJSONString(xdmp:quote(<remove_json_ns>{ $element/* }</remove_json_ns>/*)), '"')
+    else ('"', json:escapeJSONString($element), '"')
+};
+
 declare private function json:outputObject(
     $element as element()
 ) as xs:string*
@@ -478,8 +587,11 @@ declare private function json:outputObject(
     "{",
         for $child at $pos in $element/json:*
         return (
-            if($pos = 1) then () else ",",
-            '"', json:unescapeNCName(fn:local-name($child)), '":', json:processElement($child)
+            if($pos = 1)
+            then ()
+            else ","
+            ,
+            '"', json:unescapeNCName(local-name($child)), '":', json:processElement($child)
         ),
     "}"
 };
@@ -491,7 +603,10 @@ declare private function json:outputArray(
     "[",
         for $child at $pos in $element/json:item
         return (
-            if($pos = 1) then () else ",",
+            if($pos = 1)
+            then ()
+            else ","
+            ,
             json:processElement($child)
         ),
     "]"
@@ -502,11 +617,11 @@ declare private function json:escapeJSONString(
     $string as xs:string
 ) as xs:string
 {
-    let $string := fn:replace($string, "\\", "\\\\")
-    let $string := fn:replace($string, """", "\\""")
-    let $string := fn:replace($string, fn:codepoints-to-string((13, 10)), "\\n")
-    let $string := fn:replace($string, fn:codepoints-to-string(13), "\\n")
-    let $string := fn:replace($string, fn:codepoints-to-string(10), "\\n")
+    let $string := replace($string, "\\", "\\\\")
+    let $string := replace($string, """", "\\""")
+    let $string := replace($string, codepoints-to-string((13, 10)), "\\n")
+    let $string := replace($string, codepoints-to-string(13), "\\n")
+    let $string := replace($string, codepoints-to-string(10), "\\n")
     return $string
 };
 
@@ -528,13 +643,13 @@ declare function json:escapeNCName(
     if($val = "")
     then "_"
     else
-        fn:string-join(
+        string-join(
             let $regex := ':|_|(\i)|(\c)|.'
-            for $match at $pos in fn:analyze-string($val, $regex)/*
+            for $match at $pos in analyze-string($val, $regex)/*
             return
                 if($match/*:group/@nr = 1 or ($match/*:group/@nr = 2 and $pos != 1))
-                then fn:string($match)
-                else ("_", json:encodeHexStringHelper(fn:string-to-codepoints($match), 4))
+                then string($match)
+                else ("_", json:encodeHexStringHelper(string-to-codepoints($match), 4))
         , "")
 };
 
@@ -545,12 +660,27 @@ declare function json:unescapeNCName(
     if($val = "_")
     then ""
     else
-        fn:string-join(
+        string-join(
             let $regex := '(_[A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9][A-Fa-f0-9])|[^_]+'
-            for $match at $pos in fn:analyze-string($val, $regex)/*
+            for $match at $pos in analyze-string($val, $regex)/*
             return
                 if($match/*:group/@nr = 1)
-                then fn:codepoints-to-string(xdmp:hex-to-integer(fn:substring($match, 2)))
-                else fn:string($match)
+                then codepoints-to-string(xdmp:hex-to-integer(substring($match, 2)))
+                else string($match)
       , "")
+};
+
+declare function json:castAs(
+    $key as xs:string,
+    $enableExtensions as xs:boolean
+) as xs:string?
+{
+    let $keyBits :=
+        if($enableExtensions)
+        then tokenize($key, "::")
+        else $key
+    return
+        if(count($keyBits) > 1)
+        then $keyBits[last()][. = ("xml", "date")]
+        else ()
 };
