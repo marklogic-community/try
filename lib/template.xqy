@@ -21,7 +21,6 @@ module namespace template="http://try.marklogic.com/template";
 declare default function namespace "http://www.w3.org/2005/xpath-functions";
 
 declare function template:apply(
-		$title as xs:string,
 		$content as element()*,
         $headerContent as element()*,
         $page as xs:integer
@@ -30,7 +29,7 @@ declare function template:apply(
 	let $set := xdmp:set-response-content-type("text/html; charset=utf-8")
     let $nav := (
         <li><h4><a href="/ninja/">Getting Started</a></h4></li>,
-        <li><h4><a href="/ninja/page2.xqy">Lay Of the Land</a></h4></li>,
+        <li><h4><a href="/ninja/page2.xqy">Lay of the Land</a></h4></li>,
         <li><h4><a href="/ninja/page3.xqy">Looking at a Mail Message</a></h4></li>,
         <li><h4><a href="/ninja/page4.xqy">Drilling in with XPath</a></h4></li>,
         <li><h4><a href="/ninja/page5.xqy">Formatting Results</a></h4></li>,
@@ -49,7 +48,7 @@ declare function template:apply(
 <html>
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-        <title>{ $title }</title>
+        <title>{ string($nav[$page]/h4/a) } - Try MarkLogic</title>
         <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
         <style>
             article, aside, dialog, figure, footer, header, hgroup, menu, nav, section {{ display: block; }}

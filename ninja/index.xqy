@@ -19,7 +19,6 @@ xquery version "1.0-ml";
 import module namespace template="http://try.marklogic.com/template" at "/lib/template.xqy";
 
 template:apply(
-    "Ninja!!!",
     <div>
         <p>We assume you know the basics.  If you're truly brand new, you should probably
         jump out and find some introductory material, then come back.</p>

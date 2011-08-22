@@ -19,7 +19,6 @@ xquery version "1.0-ml";
 import module namespace template="http://try.marklogic.com/template" at "/lib/template.xqy";
 
 template:apply(
-    "Ninja!!!",
     <div>
         <h1>Extending Search API</h1>
 
