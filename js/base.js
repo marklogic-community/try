@@ -25,6 +25,7 @@ tryml.blockToParserConfig = function(block, type) {
 
     if(type === "output") {
         config.reindentOnLoad = true;
+        config.height = "dynamic";
     }
     else if(type === "input") {
         config.height = "dynamic";
@@ -89,7 +90,7 @@ tryml.setupDOM = function(block, editorId) {
                 data: { code: inputEditor.getCode() },
                 success: function(json) {
                     var data = JSON.parse(json);
-                    if(data.results) {
+                    if(data.results !== undefined) {
                         if(outputType === "html") {
                             outputContainer.html(data.results);
                         }
