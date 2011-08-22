@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+     <title>try.marklogic.com</title>
+     <!--[if IE]>
+       <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+     <![endif]-->
+     <style>
+       article, aside, dialog, figure, footer, header,
+       hgroup, menu, nav, section { display: block; }
+     </style>
+    <link rel="stylesheet" href="css/screen.css" type="text/css" media="screen, projection" />
+    <link rel="stylesheet" href="css/print.css" type="text/css" media="print">
+    <!--[if lt IE 8]><link rel="stylesheet" href="css/ie.css" type="text/css" media="screen, projection"><![endif]-->
+    <link rel="shortcut icon" href="favicon.ico" />
+  </head>
+
+  <body>
+
+      <div class="header">
+        
+        <div class="top_bar">
+          <div class="container">
+            <a id="logo" href="/">
+              <img alt="MarkLogic" src="img/ml_logo.png">
+            </a>
+            <p>search</p>
+          </div>
+        </div>
+        
+        <div class="container">
+          
+          <div class="welcome">
+            <h1>Welcome to the MarkLogic Server online playground!</h1>
+
+            <p class="teaser">
+              This tutorial gets you started writing queries against MarkLogic Server. We begin with some simple one-liner queries, work up to some modular programs, and along the way show you how to use XPath, XQuery, and MarkLogic’s Search API.
+            </p>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="main">
+        <div class="container">
+          
+          <div class="aside">
+            <h3>Contents</h3>
+            <ul class="subnav">
+              <li>
+                <h4><a href="#">Navi Item One</a></h4>
+                <ul>
+                  <li><a href="#">Getting started</a></li>
+                  <li><a href="#">Lay Off the Land</a></li>
+                  <li><a href="#">Looking at a Mail Message</a></li>
+                </ul>
+              </li>
+              <li>
+                <h4><a href="#">Navi Item Two</a></h4>
+                <ul>
+                  <li><a href="#">Getting started</a></li>
+                  <li><a href="#">Lay Off the Land</a></li>
+                  <li><a href="#">Looking at a Mail Message</a></li>
+                </ul>
+              </li>
+              <li class="subnav_item_active">
+                <h4><a href="#">Introduction</a></h4>
+                <ul>
+                  <li><a href="#">Getting started</a></li>
+                  <li><a href="#">Lay Off the Land</a></li>
+                  <li><a href="#">Looking at a Mail Message</a></li>
+                </ul>
+              </li>
+              <li>
+                <h4><a href="#">Navi Item Two</a></h4>
+                <ul>
+                  <li><a href="#">Getting started</a></li>
+                  <li><a href="#">Lay Off the Land</a></li>
+                  <li><a href="#">Looking at a Mail Message</a></li>
+                </ul>
+              </li>
+              <li>
+                <h4><a href="#">Navi Item Three</a></h4>
+                <ul>
+                  <li><a href="#">Getting started</a></li>
+                  <li><a href="#">Lay Off the Land</a></li>
+                  <li><a href="#">Looking at a Mail Message</a></li>
+                </ul>
+              </li>
+              <li>
+                <h4><a href="#">Navi Item Four</a></h4>
+                <ul>
+                  <li><a href="#">Getting started</a></li>
+                  <li><a href="#">Lay Off the Land</a></li>
+                  <li><a href="#">Looking at a Mail Message</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="content">
+            <h1>Styleguide</h1>
+            
+            <p>Lorem ipsum dolor sit amet <a href="#">this is a link</a>, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+            <h1 class="h1">A quick brown fox $%§ h1</h1>
+            <h2 class="h2">A quick brown fox $%§  h2</h2>
+            <h3 class="h3">A quick brown fox  $%§ h3</h3>
+            <h4 class="h4">A quick brown fox h4</h4>
+            <h5 class="h5">A quick brown fox h5</h5>
+            <h6 class="h6">A quick brown fox h6</h6>
+            <p>Lorem  $%§ ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+
+            <h3>Unordered List</h3>
+            <ul>
+              <li>This is a list item</li>
+              <li>in an unordered list</li>
+              <li>here’s one more list item</li>
+            </ul>
+
+            <h3>Ordered List</h3>
+            <ol>
+              <li>This is a list item</li>
+              <li>in an ordered list</li>
+              <li>here’s one more list item</li>
+            </ol>
+
+            <h3>Definition List</h3>
+            <dl>
+              <dt>Definition Term</dt>
+              <dd>Definition Description</dd>
+              <dt>Definition Term</dt>
+              <dd>Definition Description</dd>
+              <dt>Definition Term</dt>
+              <dd>Definition Description</dd>
+            </dl>
+
+            <h3>Code Listings</h3>
+            
+            <div class="codeblock codeblock_simple">
+              <div class="code_lines">
+                <span>1</span>
+                <span>2</span>
+                <span>3</span>
+                <span>4</span>
+                <span>5</span>
+              </div>
+              <pre>
+import module namespace sql = "http://xqdev.com/sql" at "sql.xqy"
+
+sql:execute("select * from clickstream limit 2",
+  "http://localhost:8080/mlsql", ())
+  import module namespace sql = "http://xqdev.com/sql" at "sql.xqy"
+              </pre>
+            </div>
+            
+            <h3>Input/Output Codeblock</h3>
+            
+            <div class="codeblock">
+              <h3 class="code_head">Header for code box</h3>
+              
+              <div class="code_input">
+                <div class="code_lines">
+                  <span>1</span>
+                  <span>2</span>
+                  <span>3</span>
+                  <span>4</span>
+                  <span>5</span>
+                  <span>6</span>
+                  <span>7</span>
+                  <span>8</span>
+                  <span>9</span>
+                  <span>10</span>
+                  <span>11</span>
+                  <span>12</span>
+                </div>
+                <pre>
+  import module namespace sql = "http://xqdev.com/sql" at "sql.xqy"
+
+  sql:execute("select * from clickstream limit 2",
+    "http://localhost:8080/mlsql", ())
+    import module namespace sql = "http://xqdev.com/sql" at "sql.xqy"
+
+    sql:execute("select * from clickstream limit 2",
+      "http://localhost:8080/mlsql"
+
+      sql:execute("select * from clickstream limit 2",
+        "http://localhost:8080/mlsql", ())
+                </pre>
+              </div>
+              <div class="code_go">
+                <a href="#" class="btn btn_blue">Go!</a>
+              </div>
+              <div class="code_output">
+                <div class="code_lines">
+                  <span>1</span>
+                  <span>2</span>
+                  <span>3</span>
+                  <span>4</span>
+                  <span>5</span>
+                  <span>6</span>
+                  <span>7</span>
+                  <span>8</span>
+                  <span>9</span>
+                  <span>10</span>
+                  <span>11</span>
+                  <span>12</span>
+                </div>
+                <pre>
+  import module namespace sql = "http://xqdev.com/sql" at "sql.xqy"
+
+  sql:execute("select * from clickstream limit 2",
+    "http://localhost:8080/mlsql", ())
+    import module namespace sql = "http://xqdev.com/sql" at "sql.xqy"
+
+    sql:execute("select * from clickstream limit 2",
+      "http://localhost:8080/mlsql", ())import module namespace sql = "http://xqdev.com/sql" at "sql.xqy"
+
+      sql:execute("select * from clickstream limit 2",
+        "http://localhost:8080/mlsql", ())
+                </pre>
+              </div>
+            </div>
+            
+            <h3>Notes, Warnings</h3>
+            
+            <div class="note">
+              This returns the number of documents in the database that have a <message> root element. It’s a lower number than above because it doesn’t include the binary attachments. If you’ve seen XPath before this should look fairly familiar.
+            </div>
+            
+            <div class="warning">
+              This returns the number of documents in the database that have a <message> root element. It’s a lower number than above because it doesn’t include the binary attachments. If you’ve seen XPath before this should look fairly familiar.
+            </div>
+            
+            
+            <div class="pagination">
+              <p class="pagination_prev">
+                <a href="#" class="btn btn_blue">&laquo; Previous</a>
+                <span>title of prev page</span>
+              </p>
+              
+              <p class="pagination_next">
+                <a href="#" class="btn btn_blue">Next &raquo;</a>
+                <span>title of next page</span>
+              </p>
+            </div>
+          
+            <div class="disqus_cntr">
+              Disqus goes here
+            </div>
+          
+          </div>
+
+
+        </div>
+      </div>
+
+    <div class="footer">
+      <div class="container">
+        <p>Copyright © 2010-2011 MarkLogic Corporation. All rights reserved. | Powered by MarkLogic Server 4.2-4 and rundmc. (cornify)</p>
+      </div>
+    </div>
+
+  </body>
+
+</html>
+
