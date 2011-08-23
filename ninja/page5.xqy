@@ -28,7 +28,7 @@ template:apply(
         construct new nodes.  Here's a query that converts the previous subject list
         into an HTML list:</p>
 
-        <textarea id="sample14" class="code input-xquery output-xml">&lt;ul&gt;{{
+        <textarea id="sample14" class="code input-xquery output-html">&lt;ul&gt;{{
     for $m in (/message)[1 to 10]
     return &lt;li&gt;{{ $m/headers/subject/string() }}&lt;/li&gt;
 }}&lt;/ul&gt;</textarea>
@@ -50,14 +50,14 @@ template:apply(
         automatically at the language level.  That's a perk of using a markup-aware
         language.  Try it yourself:</p>
 
-        <textarea id="sample15" class="code input-xquery output-xml">&lt;li&gt;{{ "This is &lt;a href='some link'&gt;evil&lt;/b&gt; text" }}&lt;/li&gt;</textarea>
+        <textarea id="sample15" class="code input-xquery output-html">&lt;li&gt;{{ "This is &lt;a href='some link'&gt;evil&lt;/b&gt; text" }}&lt;/li&gt;</textarea>
 
         <p>OK, let's continue.  To get a more useful HTML list, let's include the mail's
         sender, date, and subject together.  The following prints the from/@personal
         attribute which is the extracted person's name, and it formats the date as
         year/month/day:</p>
 
-        <textarea id="sample16" class="code input-xquery output-xml">&lt;ul&gt;{{
+        <textarea id="sample16" class="code input-xquery output-html">&lt;ul&gt;{{
     for $m in (/message)[1 to 10]
     return &lt;li&gt;{{ $m/headers/from/@personal/string() }} on
                {{ format-dateTime($m/@date, "[Y]/[M01]/[D01]") }} wrote
@@ -80,7 +80,7 @@ template:apply(
         prefers JSON, we can do that too, using a json.xqy library whose functions we
         import (see https://github.com/marklogic/mljson for more about the library).</p>
 
-        <textarea id="sample18" class="code input-xquery output-json">import module namespace json = "http://marklogic.com/json" at "/lib/json.xqy";
+        <textarea id="sample18" class="code input-xquery output-javascript">import module namespace json = "http://marklogic.com/json" at "/lib/json.xqy";
 
 json:serialize(
     json:array(

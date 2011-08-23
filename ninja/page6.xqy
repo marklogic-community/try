@@ -26,7 +26,7 @@ template:apply(
         following query uses a key-value constraint to limit the retrieval to mails
         posted to the Apache Maven announce mailing list:</p>
 
-        <textarea id="sample19" class="code input-xquery output-xml">&lt;ul&gt;{{
+        <textarea id="sample19" class="code input-xquery output-html">&lt;ul&gt;{{
     for $m in (/message[@list = "org.apache.maven.announce"])[1 to 10]
     return &lt;li&gt;{{ $m/headers/subject/string() }}&lt;/li&gt;
 }}&lt;/ul&gt;</textarea>
@@ -71,7 +71,7 @@ xdmp:elapsed-time()</textarea>
         list constraint as well as classification type constraint.  It returns the
         results as an HTML list:</p>
 
-        <textarea id="sample22" class="code input-xquery output-xml">let $lists := ("org.apache.httpd.dev", "org.apache.httpd.users")
+        <textarea id="sample22" class="code input-xquery output-html">let $lists := ("org.apache.httpd.dev", "org.apache.httpd.users")
 let $type := "announcements"
 return
     &lt;ul&gt;{{

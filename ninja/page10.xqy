@@ -31,13 +31,13 @@ template:apply(
         expressions: asterisk means 0 to n many, question mark means 0 or 1, plus
         means 1 to n many, and no modifier means exactly one.</p>
 
-        <textarea id="sample40" class="code input-xquery output-xml">declare function local:random-word()
+        <textarea id="sample40" class="code input-xquery output-html">declare function local:random-word()
 as xs:string
 {{
   let $words := ("release", "thank you", "function")
   let $random := 1 + xdmp:random(2)
   return $words[$random]
-}}
+}};
 
 declare function local:lists-query(
   $lists as xs:string*
@@ -106,7 +106,7 @@ return &lt;li&gt;{{ $m/headers/subject/string() }}&lt;/li&gt;
         give them a special header.  Here's file test-lib.xqy (which is already
         installed on the box for you):</p>
 
-        <textarea id="sample41" class="code input-xquery output-xml">module namespace test="http://try.marklogic.com/test";
+        <textarea id="sample41" class="code input-xquery readonly">module namespace test="http://try.marklogic.com/test";
 
 declare default function namespace "http://www.w3.org/2005/xpath-functions";
 

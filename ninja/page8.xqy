@@ -73,7 +73,7 @@ return cts:search(//subject, $query)[1 to 10]</textarea>
         constructor along with some query constructors that specify in which element
         or element-attribute location the match has to be found:</p>
 
-        <textarea id="sample37" class="code input-xquery output-xml">let $lists := ("httpd", "firefox")
+        <textarea id="sample37" class="code input-xquery output-html">let $lists := ("httpd", "firefox")
 let $types := ("general", "development", "users")
 let $subject := "OT"
 let $query :=
@@ -110,7 +110,7 @@ return
 
         <p>Change "OT" to any word or phrase and have fun.  For example:</p>
 
-        <textarea id="sample38" class="code input-xquery output-xml">let $lists := ("httpd", "firefox")
+        <textarea id="sample38" class="code input-xquery output-html">let $lists := ("httpd", "firefox")
 let $types := ("general", "development", "users")
 let $subject := ("web mail", "gmail", "yahoo mail")
 let $query :=
