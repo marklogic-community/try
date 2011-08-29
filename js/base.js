@@ -20,7 +20,7 @@ tryml.blockToParserConfig = function(block, type) {
         continuousScanning: false,
         lineNumbers: true,
         textWrapping: false,
-        readOnly:false
+        readOnly: false
     };
 
     if(type === "output") {
