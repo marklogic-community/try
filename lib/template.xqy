@@ -89,8 +89,17 @@ declare function template:apply(
                         )}</li>
                     }</ul>
                 </div>
-          
-                <div class="content">{ $content }</div>
+                <div class="content">
+                    { $content }
+                    <div class="pagination">{
+                        if($page > 1)
+                        then <p class="pagination_prev"><a href="{ $nav[$page - 1]/h4/a/@href }" class="btn btn_blue">&laquo; Previous</a><span>{ string($nav[$page - 1]/h4/a) }</span></p>
+                        else (),
+                        if($page < count($nav))
+                        then <p class="pagination_next"><a href="{ $nav[$page + 1]/h4/a/@href }" class="btn btn_blue">Next &raquo;</a><span>{ string($nav[$page + 1]/h4/a) }</span></p>
+                        else ()
+                    }</div>
+                </div>
             </div>
         </div>
 
