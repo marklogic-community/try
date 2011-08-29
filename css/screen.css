@@ -441,12 +441,19 @@ div.codeContainer {
 div.codeContainer button {
 }
 
-div.inputContainer,
-div.outputContainer {
-    border: 1px solid black;
-    margin-bottom: 5px;
+div.inputContainer {
+    border-top: 1px solid #BCBCBC;
+    border-left: 1px solid #BCBCBC;
+    border-right: 1px solid #BCBCBC;
 }
 
 div.outputContainer {
-    margin-top: 5px;
+    border-bottom: 1px solid #BCBCBC;
+    border-left: 1px solid #BCBCBC;
+    border-right: 1px solid #BCBCBC;
+    background-color: white;
+    margin-bottom: 5px;
+}
+div.outputContainer.html {
+    padding: 5px;
 }

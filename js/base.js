@@ -19,16 +19,14 @@ tryml.blockToParserConfig = function(block, type) {
         path: "/CodeMirror/js/",
         continuousScanning: false,
         lineNumbers: true,
-        textWrapping: false,
-        readOnly: false
+        textWrapping: true,
+        readOnly: false,
+        height: "dynamic",
+        minHeight: 23
     };
 
     if(type === "output") {
         config.reindentOnLoad = true;
-        config.height = "dynamic";
-    }
-    else if(type === "input") {
-        config.height = "dynamic";
     }
 
     if(block.hasClass("readonly") || type === "output") {
@@ -69,10 +67,11 @@ tryml.setupDOM = function(block, editorId) {
             outputConfig = tryml.blockToParserConfig(block, "output");
         }
 
-        var container = $(block).replaceWithReturningNew("<div id='" + editorId + "' class='codeContainer'><div class='inputContainer'></div><button class='submit'>Submit</button><div class='outputContainer'></div><div class='errorContainer'></div></div>");
+        var container = $(block).replaceWithReturningNew("<div id='" + editorId + "' class='codeContainer'><div class='inputContainer'></div><div class='code_go'><a class='submit btn btn_blue'>Submit</a></div><div class='outputContainer'></div><div class='errorContainer'></div></div>");
 
         var outputContainer = container.find("div.outputContainer");
         outputContainer.hide();
+        outputContainer.addClass(outputType);
 
         if(outputType !== "html") {
             outputEditor = new CodeMirror(outputContainer.get(0), outputConfig);
@@ -81,7 +80,7 @@ tryml.setupDOM = function(block, editorId) {
         var errorContainer = container.find("div.errorContainer");
         errorContainer.hide();
 
-        var submitButton = container.find("button.submit");
+        var submitButton = container.find("a.submit");
         submitButton.click(function() {
             var inputEditor = tryml.editors[editorId];
             $.ajax({
