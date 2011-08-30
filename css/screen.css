@@ -447,6 +447,10 @@ div.inputContainer {
     border-right: 1px solid #BCBCBC;
 }
 
+div.inputContainer.readonly {
+    border-bottom: 1px solid #BCBCBC;
+}
+
 div.outputContainer {
     border-bottom: 1px solid #BCBCBC;
     border-left: 1px solid #BCBCBC;

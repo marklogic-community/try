@@ -51,7 +51,7 @@ template:apply(
         long time to execute (and yes, smiley faces are how you surround comments in
         XQuery):</p>
 
-        <textarea id="sample12" class="code input-xquery output-xml">(: Don't do it this way :)
+        <textarea id="sample12" class="code input-xquery readonly">(: Don't do it this way :)
 //para[1]</textarea>
 
         <p>That's powerful, but when you want just one paragraph, you use parentheses.

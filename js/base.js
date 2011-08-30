@@ -22,7 +22,7 @@ tryml.blockToParserConfig = function(block, type) {
         textWrapping: true,
         readOnly: false,
         height: "dynamic",
-        minHeight: 23
+        minHeight: 70
     };
 
     if(type === "output") {
@@ -67,7 +67,7 @@ tryml.setupDOM = function(block, editorId) {
             outputConfig = tryml.blockToParserConfig(block, "output");
         }
 
-        var container = $(block).replaceWithReturningNew("<div id='" + editorId + "' class='codeContainer'><div class='inputContainer'></div><div class='code_go'><a class='submit btn btn_blue'>Submit</a></div><div class='outputContainer'></div><div class='errorContainer'></div></div>");
+        var container = block.replaceWithReturningNew("<div id='" + editorId + "' class='codeContainer'><div class='inputContainer'></div><div class='code_go'><a class='submit btn btn_blue'>Submit</a></div><div class='outputContainer'></div><div class='errorContainer'></div></div>");
 
         var outputContainer = container.find("div.outputContainer");
         outputContainer.hide();
@@ -122,7 +122,7 @@ tryml.setupDOM = function(block, editorId) {
         return container;
     }
     else {
-        return $(block).replaceWithReturningNew("<div class='codeContainer'><div class='inputContainer'></div></div>");
+        return block.replaceWithReturningNew("<div id='" + editorId + "' class='codeContainer'><div class='inputContainer readonly'></div></div>");
     }
 };
 
