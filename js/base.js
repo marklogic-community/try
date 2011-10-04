@@ -8,21 +8,12 @@ if(typeof tryml == "undefined" || !tryml) {
 
 tryml.editors = {};
 
-$.fn.replaceWithReturningNew = function () {
-    var ret = $(arguments[0]);
-    this.replaceWith(ret);
-    return ret;
-};
-
 tryml.blockToParserConfig = function(block, type) {
     var config = {
-        path: "/CodeMirror/js/",
-        continuousScanning: false,
         lineNumbers: true,
-        textWrapping: true,
-        readOnly: false,
-        height: "dynamic",
-        minHeight: 70
+        readOnly: false
+        /* height: "dynamic", */
+        /* minHeight: 70 */
     };
 
     if(type === "output") {
@@ -34,16 +25,14 @@ tryml.blockToParserConfig = function(block, type) {
     }
 
     if(block.hasClass(type + "-xquery")) {
-        config.parserfile = ["tokenizexquery.js", "parsexquery.js"];
-        config.stylesheet = ["/CodeMirror/css/xqcolors2.css"];
+        config.mode = "xquery";
+        // config.theme = "xquery-dark";
     }
     else if(block.hasClass(type + "-xml")) {
-        config.parserfile = ["parsexml.js"];
-        config.stylesheet = ["/CodeMirror/css/xmlcolors.css"];
+        config.mode = "xml";
     }
     else if(block.hasClass(type + "-javascript")) {
-        config.parserfile = ["tokenizejavascript.js", "parsejavascript.js"];
-        config.stylesheet = ["/CodeMirror/css/jscolors.css"];
+        config.mode = {"name": "javascript", "json": true};
     }
 
     return config;
@@ -74,7 +63,7 @@ tryml.setupDOM = function(block, editorId) {
         outputContainer.addClass(outputType);
 
         if(outputType !== "html") {
-            outputEditor = new CodeMirror(outputContainer.get(0), outputConfig);
+            outputEditor = CodeMirror(outputContainer.get(0), outputConfig);
         }
 
         var errorContainer = container.find("div.errorContainer");
@@ -86,7 +75,7 @@ tryml.setupDOM = function(block, editorId) {
             $.ajax({
                 url: "/exec.xqy",
                 type: "POST",
-                data: { code: inputEditor.getCode() },
+                data: { code: inputEditor.getValue() },
                 success: function(json) {
                     var data = JSON.parse(json);
                     if(data.results !== undefined) {
@@ -94,9 +83,13 @@ tryml.setupDOM = function(block, editorId) {
                             outputContainer.html(data.results);
                         }
                         else {
-                            outputEditor.setCode(data.results);
+                            outputEditor.setValue(data.results);
                         }
-                        outputContainer.slideDown();
+                        outputContainer.slideDown(undefined, function() {
+                            if(outputType !== "html") {
+                                outputEditor.refresh();
+                            }
+                        });
                         errorContainer.slideUp();
                     }
                     else {
@@ -104,9 +97,9 @@ tryml.setupDOM = function(block, editorId) {
                         outputContainer.slideUp();
                         errorContainer.html(data.error.message);
 
-                        var line = inputEditor.nthLine(data.error.line);
-                        var length = inputEditor.lineContent(line).length;
-                        inputEditor.selectLines(line, 0, line, length);
+                        var lineNumber = parseInt(data.error.line, 10) - 1;
+                        var line = inputEditor.getLine(lineNumber);
+                        inputEditor.setSelection({"line": lineNumber, "ch": 0}, {"line": lineNumber, "ch": line.length});
                     }
                 },
                 statusCode: {
@@ -128,7 +121,7 @@ tryml.setupDOM = function(block, editorId) {
 
 tryml.renderBlock = function(block) {
     var config = tryml.blockToParserConfig($(block), "input");
-    config.content = block.value;
+    config.value = block.value;
 
     var editorId = block.id;
     if(editorId === undefined) {
@@ -136,12 +129,16 @@ tryml.renderBlock = function(block) {
     }
     var container = tryml.setupDOM($(block), editorId);
 
-    tryml.editors[editorId] = new CodeMirror(container.find("div.inputContainer").get(0), config);
-
-    // var editor = CodeMirror.fromTextArea(block, config);
+    tryml.editors[editorId] = CodeMirror(container.find("div.inputContainer").get(0), config);
 };
 
 $(document).ready(function() {
+    $.fn.replaceWithReturningNew = function () {
+        var ret = $(arguments[0]);
+        this.replaceWith(ret);
+        return ret;
+    };
+
     $("textarea.code").each(function(index, block) {
         tryml.renderBlock(block);
     });
@@ -153,12 +150,12 @@ $(document).ready(function() {
             var startLineNumber = parseInt(bits[1], 10);
             var endLineNumber = parseInt(bits[2], 10);
             if(editor !== undefined && startLineNumber > 0 && endLineNumber > 0) {
-                var length = editor.lineContent(editor.nthLine(endLineNumber)).length;
-                editor.selectLines(editor.nthLine(startLineNumber), 0, editor.nthLine(endLineNumber), length);
+                var length = editor.getLine(endLineNumber - 1).length;
+                editor.setSelection({"line": startLineNumber - 1, "ch": 0}, {"line": endLineNumber - 1, "ch": length});
             }
             else if(editor !== undefined && startLineNumber > 0) {
-                var length = editor.lineContent(editor.nthLine(startLineNumber)).length;
-                editor.selectLines(editor.nthLine(startLineNumber), 0, editor.nthLine(startLineNumber), length);
+                var length = editor.getLine(startLineNumber - 1).length;
+                editor.setSelection({"line": startLineNumber - 1, "ch": 0}, {"line": startLineNumber - 1, "ch": length});
             }
         });
     });

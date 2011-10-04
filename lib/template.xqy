@@ -55,8 +55,11 @@ declare function template:apply(
         </style>
         <link rel="stylesheet" href="/css/screen.css" type="text/css" media="screen, projection" />
         <link rel="stylesheet" href="/css/print.css" type="text/css" media="print"/>
-        <!--[if lt IE 8]><link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen, projection"/><![endif]-->
         <link rel="shortcut icon" href="favicon.ico" />
+
+        <link rel="stylesheet" type="text/css" href="/CodeMirror2/lib/codemirror.css"/>
+        <link rel="stylesheet" type="text/css" href="/CodeMirror2/theme/default.css"/>
+        <!--[if lt IE 8]><link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen, projection"/><![endif]-->
     </head>
     <body>
         <div class="header">
@@ -109,7 +112,12 @@ declare function template:apply(
             </div>
         </div>
     </body>
-    <script src="/CodeMirror/js/codemirror.js" type="text/javascript"><!-- --></script>
+    <script src="/CodeMirror2/lib/codemirror.js" type="text/javascript"><!-- --></script>
+    <script src="/CodeMirror2/mode/htmlmixed.js" type="text/javascript"><!-- --></script>
+    <script src="/CodeMirror2/mode/javascript.js" type="text/javascript"><!-- --></script>
+    <script src="/CodeMirror2/mode/xml.js" type="text/javascript"><!-- --></script>
+    <script src="/CodeMirror2/mode/xquery.js" type="text/javascript"><!-- --></script>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"><!-- --></script>
     <script src="/js/base.js" type="text/javascript"><!-- --></script>
 </html>
