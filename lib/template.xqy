@@ -119,6 +119,7 @@ declare function template:apply(
     <script src="/CodeMirror2/mode/xquery.js" type="text/javascript"><!-- --></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"><!-- --></script>
+    <script src="/js/json2.js" type="text/javascript"><!-- --></script>
     <script src="/js/base.js" type="text/javascript"><!-- --></script>
 </html>
 )

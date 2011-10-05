@@ -393,7 +393,7 @@ textarea.code {
 
 div.CodeMirror-scroll {
     height: auto;
-    overflow: visible;
+    overflow: auto;
 }
 
 div.codeContainer {

@@ -31,7 +31,7 @@ tryml.blockToParserConfig = function(block, type) {
     else if(block.hasClass(type + "-xml")) {
         config.mode = "xml";
     }
-    else if(block.hasClass(type + "-javascript")) {
+    else if(block.hasClass(type + "-json")) {
         config.mode = {"name": "javascript", "json": true};
     }
 
@@ -83,7 +83,12 @@ tryml.setupDOM = function(block, editorId) {
                             outputContainer.html(data.results);
                         }
                         else {
-                            outputEditor.setValue(data.results);
+                            if(outputConfig.mode.name !== undefined && outputConfig.mode.name === "javascript" && outputConfig.mode.json === true) {
+                                outputEditor.setValue(JSON.stringify(JSON.parse(data.results), undefined, 2));
+                            }
+                            else {
+                                outputEditor.setValue(data.results);
+                            }
                         }
                         outputContainer.slideDown(undefined, function() {
                             if(outputType !== "html") {

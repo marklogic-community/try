@@ -80,7 +80,7 @@ template:apply(
         prefers JSON, we can do that too, using a json.xqy library whose functions we
         import (see https://github.com/marklogic/mljson for more about the library).</p>
 
-        <textarea id="sample18" class="code input-xquery output-javascript">import module namespace json = "http://marklogic.com/json" at "/lib/json.xqy";
+        <textarea id="sample18" class="code input-xquery output-json">import module namespace json = "http://marklogic.com/json" at "/lib/json.xqy";
 
 json:serialize(
     json:array(
