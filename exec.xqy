@@ -18,6 +18,7 @@ import module namespace json="http://marklogic.com/json" at "/lib/json.xqy";
 
 let $set := xdmp:set-response-content-type("text/plain")
 let $code := xdmp:get-request-field("code", "()")[1]
+let $code := concat("declare boundary-space preserve; ", $code)
 
 let $results :=
     try {
