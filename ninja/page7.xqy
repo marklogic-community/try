@@ -32,7 +32,7 @@ template:apply(
         lets them see "facets" of their results and drill in.  Someone unfamiliar with
         MarkLogic might write this:</p>
 
-        <textarea id="sample30" class="code input-xquery output-xml">(: Don't do it this way :)
+        <textarea id="sample30" class="code input-xquery readonly">(: Don't do it this way :)
 distinct-values(/message//attachment/@extension)</textarea>
 
         <p>It's perfectly valid code, but it operates through brute force by loading
