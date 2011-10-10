@@ -112,15 +112,8 @@ declare function template:apply(
             </div>
         </div>
     </body>
-    <script src="/CodeMirror2/lib/codemirror.js" type="text/javascript"><!-- --></script>
-    <script src="/CodeMirror2/mode/htmlmixed.js" type="text/javascript"><!-- --></script>
-    <script src="/CodeMirror2/mode/javascript.js" type="text/javascript"><!-- --></script>
-    <script src="/CodeMirror2/mode/xml.js" type="text/javascript"><!-- --></script>
-    <script src="/CodeMirror2/mode/xquery.js" type="text/javascript"><!-- --></script>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"><!-- --></script>
-    <script src="/js/json2.js" type="text/javascript"><!-- --></script>
-    <script src="/js/base.js" type="text/javascript"><!-- --></script>
+    <script src="http://try.marklogic.com:8005/js/tryml.js" type="text/javascript"><!-- --></script>
 </html>
 )
 };

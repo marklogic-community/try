@@ -78,7 +78,6 @@ tryml.setupDOM = function(block, editorId) {
                 data: { code: inputEditor.getValue() },
                 dataType: "jsonp",
                 success: function(json) {
-                    console.log(json);
                     if(json.results !== undefined) {
                         if(outputType === "html") {
                             outputContainer.html(json.results);
@@ -143,7 +142,7 @@ $(document).ready(function() {
 
     scriptTags.each(function(index, script) {
         var src = "" + script.getAttribute("src");
-        if(src.match("js/base.js$")) {
+        if(src.match("js/tryml.js$")) {
             tryml.hostedDomain = src.split("/").slice(0, 3).join("/");
         }
     });
