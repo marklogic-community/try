@@ -25,14 +25,14 @@ template:apply(
         <p>If you want to know how many mails have a PowerPoint attachment that's pretty
         easy to write:</p>
 
-        <textarea id="sample29" class="code input-xquery output-xml">xdmp:estimate(/message//attachment[@extension = "ppt"])</textarea>
+        <textarea id="sample29" class="trymlcode input-xquery output-xml">xdmp:estimate(/message//attachment[@extension = "ppt"])</textarea>
 
         <p>But what if you want to know what extensions are out there, the full list that
         people have sent?  Users often like to see this in search results because it
         lets them see "facets" of their results and drill in.  Someone unfamiliar with
         MarkLogic might write this:</p>
 
-        <textarea id="sample30" class="code input-xquery readonly">(: Don't do it this way :)
+        <textarea id="sample30" class="trymlcode input-xquery readonly">(: Don't do it this way :)
 distinct-values(/message//attachment/@extension)</textarea>
 
         <p>It's perfectly valid code, but it operates through brute force by loading
@@ -42,7 +42,7 @@ distinct-values(/message//attachment/@extension)</textarea>
         isn't to grow your memory sizes, it's to take a wholly different index-based
         approach:</p>
 
-        <textarea id="sample31" class="code input-xquery output-xml">cts:element-attribute-values(
+        <textarea id="sample31" class="trymlcode input-xquery output-xml">cts:element-attribute-values(
     xs:QName("attachment"), xs:QName("extension")
 )</textarea>
 
@@ -56,7 +56,7 @@ distinct-values(/message//attachment/@extension)</textarea>
         <p>You can also request frequency counts and/or ask for results in frequency
         order:</p>
 
-        <textarea id="sample32" class="code input-xquery output-xml">for $item in cts:element-attribute-values(
+        <textarea id="sample32" class="trymlcode input-xquery output-xml">for $item in cts:element-attribute-values(
     xs:QName("attachment"), xs:QName("extension"), "", "frequency-order"
 )
 return concat($item, ": ", cts:frequency($item))</textarea>

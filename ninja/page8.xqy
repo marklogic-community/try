@@ -39,7 +39,7 @@ template:apply(
         <p>The basic building-block of text searches is a cts:query object.  The "cts"
         namespace stands for "core text search".  Here's a basic example:</p>
 
-        <textarea id="sample33" class="code input-xquery output-xml">cts:search(//subject, cts:word-query("release"))[1 to 10]</textarea>
+        <textarea id="sample33" class="trymlcode input-xquery output-xml">cts:search(//subject, cts:word-query("release"))[1 to 10]</textarea>
 
         <p>This searches for &lt;subject&gt; elements that have within them the word "release".
         The first argument to cts:search() dictates the scope of the search.  The
@@ -54,7 +54,7 @@ template:apply(
         case-insensitive and stemmed, you'll see "RELEASE" and "Released" as valid
         matches.  We can control the options with a second argument:</p>
 
-        <textarea id="sample34" class="code input-xquery output-xml">cts:search(//subject, cts:word-query("release", "unstemmed"))[1 to 10]</textarea>
+        <textarea id="sample34" class="trymlcode input-xquery output-xml">cts:search(//subject, cts:word-query("release", "unstemmed"))[1 to 10]</textarea>
 
         <p>The second argument accepts a sequence of strings.  Up above we passed a
         single string.  Is that legal?  Yes, in XQuery.  In XQuery there's no
@@ -62,18 +62,18 @@ template:apply(
         that value.  The following query passes a sequence of strings to also require
         case sensitivity in the matches:</p>
 
-        <textarea id="sample35" class="code input-xquery output-xml">cts:search(//subject, cts:word-query("RELEASE", ("unstemmed","case-sensitive")))[1 to 10] </textarea>
+        <textarea id="sample35" class="trymlcode input-xquery output-xml">cts:search(//subject, cts:word-query("RELEASE", ("unstemmed","case-sensitive")))[1 to 10] </textarea>
 
         <p>That might be easier to read using a FLWOR:</p>
 
-        <textarea id="sample36" class="code input-xquery output-xml">let $query := cts:word-query("release", ("unstemmed","case-sensitive"))
+        <textarea id="sample36" class="trymlcode input-xquery output-xml">let $query := cts:word-query("release", ("unstemmed","case-sensitive"))
 return cts:search(//subject, $query)[1 to 10]</textarea>
 
         <p>There's dozens of cts:query constructors.  Here's one that uses a boolean
         constructor along with some query constructors that specify in which element
         or element-attribute location the match has to be found:</p>
 
-        <textarea id="sample37" class="code input-xquery output-html">let $lists := ("httpd", "firefox")
+        <textarea id="sample37" class="trymlcode input-xquery output-html">let $lists := ("httpd", "firefox")
 let $types := ("general", "development", "users")
 let $subject := "OT"
 let $query :=
@@ -110,7 +110,7 @@ return
 
         <p>Change "OT" to any word or phrase and have fun.  For example:</p>
 
-        <textarea id="sample38" class="code input-xquery output-html">let $lists := ("httpd", "firefox")
+        <textarea id="sample38" class="trymlcode input-xquery output-html">let $lists := ("httpd", "firefox")
 let $types := ("general", "development", "users")
 let $subject := ("web mail", "gmail", "yahoo mail")
 let $query :=

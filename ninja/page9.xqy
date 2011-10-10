@@ -46,7 +46,7 @@ template:apply(
         <p>Here's a query where you can see a few relevance knobs in action.  We specify
         four places to look for the match $word, with different weighting on each:</p>
 
-        <textarea id="sample39" class="code input-xquery output-html">let $lists := ("httpd", "firefox")
+        <textarea id="sample39" class="trymlcode input-xquery output-html">let $lists := ("httpd", "firefox")
 let $types := ("announcements", "general", "development")
 let $word := "release"
 let $query :=

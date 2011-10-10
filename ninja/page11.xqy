@@ -27,7 +27,7 @@ template:apply(
         taken from documents matching the given cts:query.  The following finds the
         top senders of mails matching a specific query.</p>
 
-        <textarea id="sample43" class="code input-xquery output-xml">let $lists := ("httpd", "firefox")
+        <textarea id="sample43" class="trymlcode input-xquery output-xml">let $lists := ("httpd", "firefox")
 let $types := ("announcements", "general", "development")
 let $word := "release"
 let $query :=
@@ -71,7 +71,7 @@ return concat($value, ": ", cts:frequency($value))</textarea>
         default) and what we'll see is a traffic-by-month report, the basis for the
         MarkMail histogram chart:</p>
 
-        <textarea id="sample44" class="code input-xquery output-xml">cts:element-attribute-values(
+        <textarea id="sample44" class="trymlcode input-xquery output-xml">cts:element-attribute-values(
     xs:QName("message"), xs:QName("year-month"), "", (), $query
 )[1 to 100]</textarea>
 

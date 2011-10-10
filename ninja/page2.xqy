@@ -24,20 +24,20 @@ template:apply(
 
         <p>OK, let's get going.  Try this query:</p>
 
-        <textarea id="sample1" class="code input-xquery output-xml">"hello world"</textarea>
+        <textarea id="sample1" class="trymlcode input-xquery output-xml">"hello world"</textarea>
 
         <p>Yep, that's the classic Hello World program written in XQuery.  It's so simple
         because XQuery is a functional language and everything is an expression.  The
         "hello world" text is a string, and that's a valid expression and thus a valid
         program.  Now try this:</p>
 
-        <textarea id="sample2" class="code input-xquery output-xml">xdmp:estimate(doc())</textarea>
+        <textarea id="sample2" class="trymlcode input-xquery output-xml">xdmp:estimate(doc())</textarea>
 
         <p>It's OK if you don't understand how it works yet.  Go ahead and run it.  You
         can't hurt anything here.  This query returns the number of documents in the
         database.  You should see a bit over 5 million.  Let's try another query:</p>
 
-        <textarea id="sample3" class="code input-xquery output-xml">xdmp:estimate(doc()/message)</textarea>
+        <textarea id="sample3" class="trymlcode input-xquery output-xml">xdmp:estimate(doc()/message)</textarea>
 
         <p>This returns the number of documents in the database that have a &lt;message&gt;
         root element.  It's a lower number than above because it doesn't include the
@@ -61,7 +61,7 @@ template:apply(
         document identifier can be any string, so long as the string is a valid URI.
         Here's a call to fetch a single document:</p>
 
-        <textarea id="sample4" class="code input-xquery output-xml">doc("/ultlr54iuhh4nutn.xml")</textarea>
+        <textarea id="sample4" class="trymlcode input-xquery output-xml">doc("/ultlr54iuhh4nutn.xml")</textarea>
 
         <p>With this query you can see the raw XML source behind the email visible at
         <a href="http://markmail.org/message/ultlr54iuhh4nutn">http://markmail.org/message/ultlr54iuhh4nutn.</a></p>

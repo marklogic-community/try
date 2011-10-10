@@ -31,7 +31,7 @@ template:apply(
         expressions: asterisk means 0 to n many, question mark means 0 or 1, plus
         means 1 to n many, and no modifier means exactly one.</p>
 
-        <textarea id="sample40" class="code input-xquery output-html">declare function local:random-word()
+        <textarea id="sample40" class="trymlcode input-xquery output-html">declare function local:random-word()
 as xs:string
 {{
   let $words := ("release", "thank you", "function")
@@ -106,7 +106,7 @@ return &lt;li&gt;{{ $m/headers/subject/string() }}&lt;/li&gt;
         give them a special header.  Here's file test-lib.xqy (which is already
         installed on the box for you):</p>
 
-        <textarea id="sample41" class="code input-xquery readonly">module namespace test="http://try.marklogic.com/test";
+        <textarea id="sample41" class="trymlcode input-xquery readonly">module namespace test="http://try.marklogic.com/test";
 
 declare default function namespace "http://www.w3.org/2005/xpath-functions";
 
@@ -124,7 +124,7 @@ declare function test:median(
 
 And here's how you import the library and use it:
 
-<textarea id="sample42" class="code input-xquery output-xml">import module namespace test = "http://try.marklogic.com/test" at "/lib/test-lib.xqy";
+<textarea id="sample42" class="trymlcode input-xquery output-xml">import module namespace test = "http://try.marklogic.com/test" at "/lib/test-lib.xqy";
 
 let $values := (7,4,2,3,1,6,5)
 return test:median($values)</textarea>

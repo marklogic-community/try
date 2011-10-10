@@ -53,7 +53,7 @@ template:apply(
         written in XQuery, you need to import it like any other module.  Try this
         query:</p>
 
-        <textarea id="sample45" class="code input-xquery output-xml">import module namespace search =
+        <textarea id="sample45" class="trymlcode input-xquery output-xml">import module namespace search =
 	"http://marklogic.com/appservices/search" at
 	"/MarkLogic/appservices/search/search.xqy";
 search:search("hello world")</textarea>
@@ -67,7 +67,7 @@ search:search("hello world")</textarea>
         node in your configuration).  The below example specifies three new
         constraints: "list", "from", and "subject".</p>
 
-        <textarea id="sample46" class="code input-xquery output-xml">import module namespace search =
+        <textarea id="sample46" class="trymlcode input-xquery output-xml">import module namespace search =
 	"http://marklogic.com/appservices/search" at
 	"/MarkLogic/appservices/search/search.xqy";
 
@@ -104,7 +104,7 @@ search:search("list:apache from:ibm.com subject:release patches",
         "date-forward", or "date-backward".  If sorting by date, relevance score
         breaks any ties.</p>
 
-        <textarea id="sample47" class="code input-xquery output-xml">import module namespace search =
+        <textarea id="sample47" class="trymlcode input-xquery output-xml">import module namespace search =
 	"http://marklogic.com/appservices/search" at
 	"/MarkLogic/appservices/search/search.xqy";
 
@@ -168,7 +168,7 @@ search:search("list:hadoop bug sort:date-forward",
         constantly updating, we'll search for date:decade to match all mails in the
         last 10 years that include the phrase "web server".</p>
 
-        <textarea id="sample48" class="code input-xquery output-xml">import module namespace search =
+        <textarea id="sample48" class="trymlcode input-xquery output-xml">import module namespace search =
   "http://marklogic.com/appservices/search"
   at "/MarkLogic/appservices/search/search.xqy";
 
@@ -209,7 +209,7 @@ search:search('"web server" date:decade',
         <p>You don't always need buckets for facets.  Here's how to extract the top 100
         senders (without results):</p>
 
-        <textarea id="sample49" class="code input-xquery output-xml">import module namespace search =
+        <textarea id="sample49" class="trymlcode input-xquery output-xml">import module namespace search =
 	"http://marklogic.com/appservices/search" at
 	"/MarkLogic/appservices/search/search.xqy";
 

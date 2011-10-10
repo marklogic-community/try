@@ -26,7 +26,7 @@ template:apply(
         following query uses a key-value constraint to limit the retrieval to mails
         posted to the Apache Maven announce mailing list:</p>
 
-        <textarea id="sample19" class="code input-xquery output-html">&lt;ul&gt;{{
+        <textarea id="sample19" class="trymlcode input-xquery output-html">&lt;ul&gt;{{
     for $m in (/message[@list = "org.apache.maven.announce"])[1 to 10]
     return &lt;li&gt;{{ $m/headers/subject/string() }}&lt;/li&gt;
 }}&lt;/ul&gt;</textarea>
@@ -37,7 +37,7 @@ template:apply(
         It has indexes that can find these mails extremely fast.  How fast?  Let's
         check:</p>
 
-        <textarea id="sample20" class="code input-xquery output-xml">xdmp:estimate(/message[@list = "org.apache.maven.announce"])
+        <textarea id="sample20" class="trymlcode input-xquery output-xml">xdmp:estimate(/message[@list = "org.apache.maven.announce"])
 ,
 xdmp:elapsed-time()</textarea>
 
@@ -52,7 +52,7 @@ xdmp:elapsed-time()</textarea>
 
         <p>Here's another less optimal way to get the count:</p>
 
-        <textarea id="sample21" class="code input-xquery output-xml">count(/message[@list = "org.apache.maven.announce"])
+        <textarea id="sample21" class="trymlcode input-xquery output-xml">count(/message[@list = "org.apache.maven.announce"])
 ,
 xdmp:elapsed-time()</textarea>
 
@@ -71,7 +71,7 @@ xdmp:elapsed-time()</textarea>
         list constraint as well as classification type constraint.  It returns the
         results as an HTML list:</p>
 
-        <textarea id="sample22" class="code input-xquery output-html">let $lists := ("org.apache.httpd.dev", "org.apache.httpd.users")
+        <textarea id="sample22" class="trymlcode input-xquery output-html">let $lists := ("org.apache.httpd.dev", "org.apache.httpd.users")
 let $type := "announcements"
 return
     &lt;ul&gt;{{
@@ -104,7 +104,7 @@ return
         <p>Let's check how fast this query operates.  We can test the raw
         index-resolution performance with this simplified query:</p>
 
-        <textarea id="sample23" class="code input-xquery output-xml">let $lists := ("org.apache.httpd.dev", "org.apache.httpd.users")
+        <textarea id="sample23" class="trymlcode input-xquery output-xml">let $lists := ("org.apache.httpd.dev", "org.apache.httpd.users")
 let $type := "announcements"
 return xdmp:estimate(/message[@list = $lists][@type = $type])
 ,
@@ -116,14 +116,14 @@ xdmp:elapsed-time()</textarea>
         XML model, attachments are represented by &lt;attachment&gt; elements.  The
         following query shows one at random:</p>
 
-        <textarea id="sample24" class="code input-xquery output-xml">(/message//attachment)[1]</textarea>
+        <textarea id="sample24" class="trymlcode input-xquery output-xml">(/message//attachment)[1]</textarea>
 
         <p>Each attachment element uses attributes to hold various metadata fields, and
         stores the attachment's content details within.  The above attachment happens
         to be a patch file.  It might be more interesting to find a PowerPoint
         attachment, so let's find some using the @extension attribute.</p>
 
-        <textarea id="sample25" class="code input-xquery output-xml">(/message//attachment[@extension = "ppt"])[1]</textarea>
+        <textarea id="sample25" class="trymlcode input-xquery output-xml">(/message//attachment[@extension = "ppt"])[1]</textarea>
 
         <p>That's more interesting, and it reveals a bit about how MarkMail handles
         Office attachments.  They're stored raw as a binary document (linked to from
@@ -140,16 +140,16 @@ xdmp:elapsed-time()</textarea>
         attachment.  The following query does that by finding a PowerPoint attachment
         element, then asking for its root element:</p>
 
-        <textarea id="sample26" class="code input-xquery output-xml">root((/message//attachment[@extension = "ppt"])[1])</textarea>
+        <textarea id="sample26" class="trymlcode input-xquery output-xml">root((/message//attachment[@extension = "ppt"])[1])</textarea>
 
         <p>Someone more familiar with XPath would write this (the dot is important; it
         roots the internal path to the message not the whole database):</p>
 
-        <textarea id="sample27" class="code input-xquery output-xml">(/message[.//attachment/@extension = "ppt"])[1]</textarea>
+        <textarea id="sample27" class="trymlcode input-xquery output-xml">(/message[.//attachment/@extension = "ppt"])[1]</textarea>
 
         <p>Someone exercising their FLWOR skills would write this:</p>
 
-        <textarea id="sample28" class="code input-xquery output-xml">(
+        <textarea id="sample28" class="trymlcode input-xquery output-xml">(
     for $m in /message
     where $m//attachment/@extension = "ppt"
     return $m

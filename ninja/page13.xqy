@@ -36,7 +36,7 @@ template:apply(
         specify exactly where we want to look (i.e. not inside header values) and with
         what relevance weightings.</p>
 
-        <textarea id="sample50" class="code input-xquery output-xml">search:search("hello world",
+        <textarea id="sample50" class="trymlcode input-xquery output-xml">search:search("hello world",
   &lt;options xmlns="http://marklogic.com/appservices/search"&gt;
     &lt;term apply="myterm" ns="http://try.marklogic.com/search-options"
                          at="/lib/search-options.xqy"&gt;
@@ -51,7 +51,7 @@ template:apply(
         is the cts:or-query definition that dictates where to look for matches and
         with what relevance weightings.</p>
 
-        <textarea id="sample51" class="code input-xquery output-xml">xquery version "1.0-ml";
+        <textarea id="sample51" class="trymlcode input-xquery output-xml">xquery version "1.0-ml";
 
 module namespace so="http://try.marklogic.com/search-options";
 declare default function namespace "http://www.w3.org/2005/xpath-functions";

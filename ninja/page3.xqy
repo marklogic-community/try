@@ -57,7 +57,7 @@ template:apply(
         around giving you ids, what would you do?  Well, you might just ask for a
         message at random.  Here's how you do that:</p>
 
-        <textarea id="sample5" class="code input-xquery output-xml">(doc()/message)[1]</textarea>
+        <textarea id="sample5" class="trymlcode input-xquery output-xml">(doc()/message)[1]</textarea>
 
         <p>This query returns the first document in the database (order is essentially
         random, though it is stable and doesn't change between executions).  The first
@@ -70,13 +70,13 @@ template:apply(
         can derive a URL to see this mail on MarkMail.  In fact, here's a query to
         generate that link for you:</p>
 
-        <textarea id="sample6" class="code input-xquery output-xml">concat("http://markmail.org/message/", (doc()/message/@id)[1])</textarea>
+        <textarea id="sample6" class="trymlcode input-xquery output-xml">concat("http://markmail.org/message/", (doc()/message/@id)[1])</textarea>
 
         <p>Pro tip: You can drop the leading doc() and you get the same result.  Any
         rooted XPath is assumed to query across all documents.  Let's use that
         shortcut and ask for ten random emails to explore:</p>
 
-        <textarea id="sample7" class="code input-xquery output-xml">(/message)[1 to 10]</textarea>
+        <textarea id="sample7" class="trymlcode input-xquery output-xml">(/message)[1 to 10]</textarea>
     </div>,
     (), 3
 )

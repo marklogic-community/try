@@ -154,7 +154,7 @@ $(document).ready(function() {
         return ret;
     };
 
-    $("textarea.code").each(function(index, block) {
+    $("textarea.trymlcode").each(function(index, block) {
         tryml.renderBlock(block);
     });
     $("a.goToLine").click(function() {

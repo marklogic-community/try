@@ -26,20 +26,20 @@ template:apply(
         those cases you can use XPath to specify what part of a message you want.  The
         following query gets the first email and returns its subject element:</p>
 
-        <textarea id="sample8" class="code input-xquery output-xml">(/message)[1]/headers/subject</textarea>
+        <textarea id="sample8" class="trymlcode input-xquery output-xml">(/message)[1]/headers/subject</textarea>
 
         <p>This does the same for the first ten mails:</p>
 
-        <textarea id="sample9" class="code input-xquery output-xml">(/message)[1 to 10]/headers/subject</textarea>
+        <textarea id="sample9" class="trymlcode input-xquery output-xml">(/message)[1 to 10]/headers/subject</textarea>
 
         <p>This returns the subjects as strings instead of XML elements, by executing the
         string() function on each subject:</p>
 
-        <textarea id="sample10" class="code input-xquery output-xml">(/message)[1 to 10]/headers/subject/string()</textarea>
+        <textarea id="sample10" class="trymlcode input-xquery output-xml">(/message)[1 to 10]/headers/subject/string()</textarea>
 
         <p>This returns the first (random) ten paragraphs that contain URLs:</p>
 
-        <textarea id="sample11" class="code input-xquery output-xml">(//para[url])[1 to 10]</textarea>
+        <textarea id="sample11" class="trymlcode input-xquery output-xml">(//para[url])[1 to 10]</textarea>
 
         <p>The double slash means any depth under the parent is fine.  The [url]
         predicate says the &lt;para&gt; element has to have a &lt;url&gt; child.</p>
@@ -51,14 +51,14 @@ template:apply(
         long time to execute (and yes, smiley faces are how you surround comments in
         XQuery):</p>
 
-        <textarea id="sample12" class="code input-xquery readonly">(: Don't do it this way :)
+        <textarea id="sample12" class="trymlcode input-xquery readonly">(: Don't do it this way :)
 //para[1]</textarea>
 
         <p>That's powerful, but when you want just one paragraph, you use parentheses.
         The following query returns the first item across all paragraphs.  It executes
         close to instantly.</p>
 
-        <textarea id="sample13" class="code input-xquery output-xml">(//para)[1]</textarea>
+        <textarea id="sample13" class="trymlcode input-xquery output-xml">(//para)[1]</textarea>
     </div>,
     (), 4
 )
