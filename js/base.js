@@ -7,6 +7,7 @@ if(typeof tryml == "undefined" || !tryml) {
 }
 
 tryml.editors = {};
+tryml.hostedDomain = undefined;
 
 tryml.blockToParserConfig = function(block, type) {
     var config = {
@@ -73,21 +74,21 @@ tryml.setupDOM = function(block, editorId) {
         submitButton.click(function() {
             var inputEditor = tryml.editors[editorId];
             $.ajax({
-                url: "/exec.xqy",
-                type: "POST",
+                url: tryml.hostedDomain + "/exec.xqy",
                 data: { code: inputEditor.getValue() },
+                dataType: "jsonp",
                 success: function(json) {
-                    var data = JSON.parse(json);
-                    if(data.results !== undefined) {
+                    console.log(json);
+                    if(json.results !== undefined) {
                         if(outputType === "html") {
-                            outputContainer.html(data.results);
+                            outputContainer.html(json.results);
                         }
                         else {
                             if(outputConfig.mode.name !== undefined && outputConfig.mode.name === "javascript" && outputConfig.mode.json === true) {
-                                outputEditor.setValue(JSON.stringify(JSON.parse(data.results), undefined, 2));
+                                outputEditor.setValue(JSON.stringify(JSON.parse(json.results), undefined, 2));
                             }
                             else {
-                                outputEditor.setValue(data.results);
+                                outputEditor.setValue(json.results);
                             }
                         }
                         outputContainer.slideDown(undefined, function() {
@@ -100,9 +101,9 @@ tryml.setupDOM = function(block, editorId) {
                     else {
                         errorContainer.slideDown();
                         outputContainer.slideUp();
-                        errorContainer.html(data.error.message);
+                        errorContainer.html(json.error.message);
 
-                        var lineNumber = parseInt(data.error.line, 10) - 1;
+                        var lineNumber = parseInt(json.error.line, 10) - 1;
                         var line = inputEditor.getLine(lineNumber);
                         inputEditor.setSelection({"line": lineNumber, "ch": 0}, {"line": lineNumber, "ch": line.length});
                     }
@@ -138,6 +139,15 @@ tryml.renderBlock = function(block) {
 };
 
 $(document).ready(function() {
+    var scriptTags = $("script");
+
+    scriptTags.each(function(index, script) {
+        var src = "" + script.getAttribute("src");
+        if(src.match("js/base.js$")) {
+            tryml.hostedDomain = src.split("/").slice(0, 3).join("/");
+        }
+    });
+
     $.fn.replaceWithReturningNew = function () {
         var ret = $(arguments[0]);
         this.replaceWith(ret);
