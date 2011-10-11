@@ -1,0 +1,90 @@
+/* code listing */
+
+textarea.trymlcode {
+    display: none;
+}
+
+div.CodeMirror-scroll {
+    height: auto;
+    overflow: auto;
+}
+
+div.codeContainer {
+    margin: auto;
+    width: 620px;
+    margin-bottom: 1.5em;
+}
+
+.code_head {
+    background: #01649D;
+    color: #FFF;
+    font-size: 1em;
+    font-weight: bold;
+    margin-bottom: 0;
+    padding: 0 10px;
+    height: 28px;
+    line-height: 28px;
+    -moz-border-radius: 4px 4px 0 0;
+    -webkit-border-radius: 4px 4px 0 0;
+    border-radius: 4px 4px 0 0;
+}
+
+.inputContainer,
+.outputContainer {
+    border-right: 1px solid #BCBCBC;
+    border-left: 1px solid #BCBCBC;
+    /* We can include the zebra stripes in the code blocks, just need to make some height adjustments to them */
+    /* background: #E9E8E8 url(../img/ml_zebra_stripes.png) repeat-y 0 0; */
+}
+
+.inputContainer {
+    border-top: 1px solid #BCBCBC;
+}
+
+.inputContainer.readonly,
+.outputContainer {
+    border-bottom: 1px solid #BCBCBC;
+}
+
+/* Give some padding for HTML output */
+.outputContainer.html {
+    padding: 5px;
+}
+
+.code_go {
+    text-align: center;
+    border: 1px solid #958E8E;
+    height: 29px;
+    padding-top: 5px;
+    background: #CFCFCF url(../img/ml_bg_codeblock_go.png) repeat-x 0 0;
+}
+
+
+/* buttons */
+
+.btn,
+a.btn,
+a.btn:link,
+a.btn:visited {
+  display: inline-block;
+  height: 22px;
+  line-height: 22px;
+  padding: 0 1em;
+  background: #01649D url(../img/ml_btn_bg_blue.png) repeat-x 0 0;
+  color: #FFF;
+  border: 1px solid #004C77;
+
+  text-decoration: none;
+  text-shadow: 0px -1px 0 rgba(0,0,0,.8);
+
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+}
+
+a.btn:hover,
+a.btn:active,
+a.btn:focus {
+  background: #1679B2 url(../img/ml_btn_bg_blue_hover.png) repeat-x 0 0;
+  text-decoration: none;
+}

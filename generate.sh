@@ -40,3 +40,24 @@ cat js/base.js >> /tmp/tryml.js
 ./jsmin < /tmp/tryml.js > js/tryml.js
 
 rm /tmp/tryml.js
+
+
+
+
+echo "
+/* base.css */
+
+" > css/tryml.css
+cat css/base.css >> css/tryml.css
+
+echo "
+/* codemirror.css */
+
+" >> css/tryml.css
+cat CodeMirror2/lib/codemirror.css >> css/tryml.css
+
+echo "
+/* default.css */
+
+" >> css/tryml.css
+cat CodeMirror2/theme/default.css >> css/tryml.css

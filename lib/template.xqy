@@ -53,12 +53,12 @@ declare function template:apply(
         <style>
             article, aside, dialog, figure, footer, header, hgroup, menu, nav, section {{ display: block; }}
         </style>
-        <link rel="stylesheet" href="/css/screen.css" type="text/css" media="screen, projection" />
-        <link rel="stylesheet" href="/css/print.css" type="text/css" media="print"/>
         <link rel="shortcut icon" href="favicon.ico" />
 
-        <link rel="stylesheet" type="text/css" href="/CodeMirror2/lib/codemirror.css"/>
-        <link rel="stylesheet" type="text/css" href="/CodeMirror2/theme/default.css"/>
+        <link rel="stylesheet" href="/css/screen.css" type="text/css" media="screen, projection" />
+        <link rel="stylesheet" href="/css/print.css" type="text/css" media="print"/>
+
+        <link rel="stylesheet" href="http://try.marklogic.com:8005/css/tryml.css" type="text/css" media="screen, projection" />
         <!--[if lt IE 8]><link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen, projection"/><![endif]-->
     </head>
     <body>

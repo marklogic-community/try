@@ -265,16 +265,7 @@ a:focus {
   color: #FFF;
 }
 
-/* code listing */
-
-.codeblock {
-  margin-bottom: 1.5em;
-
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
-  border-radius: 4px;
-
-}
+/* bare code */
 
 code, tt {
   font-family: "Courier New", Courier, monospace;
@@ -282,42 +273,6 @@ code, tt {
   font-style: normal;
   font-variant: normal;
   font-weight: normal;
-}
-
-.code_head {
-  background: #01649D;
-  color: #FFF;
-  font-size: 1em;
-  font-weight: bold;
-  margin-bottom: 0;
-  padding: 0 10px;
-  height: 28px;
-  line-height: 28px;
-  -moz-border-radius: 4px 4px 0 0;
-  -webkit-border-radius: 4px 4px 0 0;
-  border-radius: 4px 4px 0 0;
-}
-
-.code_input,
-.code_output,
-.code_go {
-  border-right: 1px solid #BCBCBC;
-  border-left: 1px solid #BCBCBC;
-  background: #E9E8E8 url(../img/ml_zebra_stripes.png) repeat-y 0 0;
-  
-}
-
-.code_output {
-  border-bottom: 1px solid #BCBCBC;
-}
-
-.code_go {
-  text-align: center;
-  border-top: 1px solid #958E8E;
-  border-bottom: 1px solid #958E8E;
-  height: 29px;
-  padding-top: 5px;
-  background: #CFCFCF url(../img/ml_bg_codeblock_go.png) repeat-x 0 0;
 }
 
 /* notes, warnings */
@@ -367,60 +322,4 @@ a.btn:active,
 a.btn:focus {
   background: #1679B2 url(../img/ml_btn_bg_blue_hover.png) repeat-x 0 0;
   text-decoration: none;
-}
-
-
-
-/* Code input/output styles */
-
-/*
-.CodeMirror-line-numbers {
-    width: 2.2em;
-    color: #aaa;
-    background-color: #eee;
-    text-align: right;
-    padding-right: .3em;
-    font-size: 10pt;
-    font-family: monospace;
-    padding-top: .4em;
-    line-height: normal;
-}
-*/
-
-textarea.trymlcode {
-    display: none;
-}
-
-div.CodeMirror-scroll {
-    height: auto;
-    overflow: auto;
-}
-
-div.codeContainer {
-    margin: auto;
-    width: 620px;
-}
-
-div.codeContainer button {
-}
-
-div.inputContainer {
-    border-top: 1px solid #BCBCBC;
-    border-left: 1px solid #BCBCBC;
-    border-right: 1px solid #BCBCBC;
-}
-
-div.inputContainer.readonly {
-    border-bottom: 1px solid #BCBCBC;
-}
-
-div.outputContainer {
-    border-bottom: 1px solid #BCBCBC;
-    border-left: 1px solid #BCBCBC;
-    border-right: 1px solid #BCBCBC;
-    background-color: white;
-    margin-bottom: 5px;
-}
-div.outputContainer.html {
-    padding: 5px;
 }
