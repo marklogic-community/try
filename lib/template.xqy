@@ -28,20 +28,20 @@ declare function template:apply(
 {
 	let $set := xdmp:set-response-content-type("text/html; charset=utf-8")
     let $nav := (
-        <li><h4><a href="/ninja/">Getting Started</a></h4></li>,
-        <li><h4><a href="/ninja/page2.xqy">Lay of the Land</a></h4></li>,
-        <li><h4><a href="/ninja/page3.xqy">Looking at a Mail Message</a></h4></li>,
-        <li><h4><a href="/ninja/page4.xqy">Drilling in with XPath</a></h4></li>,
-        <li><h4><a href="/ninja/page5.xqy">Formatting Results</a></h4></li>,
-        <li><h4><a href="/ninja/page6.xqy">Constraints</a></h4></li>,
-        <li><h4><a href="/ninja/page7.xqy">Facets</a></h4></li>,
-        <li><h4><a href="/ninja/page8.xqy">Text Search</a></h4></li>,
-        <li><h4><a href="/ninja/page9.xqy">Search Relevance</a></h4></li>,
-        <li><h4><a href="/ninja/page10.xqy">Functions</a></h4></li>,
-        <li><h4><a href="/ninja/page11.xqy">Query-Limited Facets</a></h4></li>,
-        <li><h4><a href="/ninja/page12.xqy">The Search API</a></h4></li>,
-        <li><h4><a href="/ninja/page13.xqy">Extending Search API</a></h4></li>,
-        <li><h4><a href="/ninja/page14.xqy">Conclusion</a></h4></li>
+        <li><h4><a href="./index.xqy">Getting Started</a></h4></li>,
+        <li><h4><a href="./page2.xqy">Lay of the Land</a></h4></li>,
+        <li><h4><a href="./page3.xqy">Looking at a Mail Message</a></h4></li>,
+        <li><h4><a href="./page4.xqy">Drilling in with XPath</a></h4></li>,
+        <li><h4><a href="./page5.xqy">Formatting Results</a></h4></li>,
+        <li><h4><a href="./page6.xqy">Constraints</a></h4></li>,
+        <li><h4><a href="./page7.xqy">Facets</a></h4></li>,
+        <li><h4><a href="./page8.xqy">Text Search</a></h4></li>,
+        <li><h4><a href="./page9.xqy">Search Relevance</a></h4></li>,
+        <li><h4><a href="./page10.xqy">Functions</a></h4></li>,
+        <li><h4><a href="./page11.xqy">Query-Limited Facets</a></h4></li>,
+        <li><h4><a href="./page12.xqy">The Search API</a></h4></li>,
+        <li><h4><a href="./page13.xqy">Extending Search API</a></h4></li>,
+        <li><h4><a href="./page14.xqy">Conclusion</a></h4></li>
     )
 	return (
 "<!DOCTYPE html>",
@@ -53,19 +53,19 @@ declare function template:apply(
         <style>
             article, aside, dialog, figure, footer, header, hgroup, menu, nav, section {{ display: block; }}
         </style>
-        <link rel="stylesheet" href="/css/screen.css" type="text/css" media="screen, projection" />
-        <link rel="stylesheet" href="/css/print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="../css/screen.css" type="text/css" media="screen, projection" />
+        <link rel="stylesheet" href="../css/print.css" type="text/css" media="print"/>
         <link rel="shortcut icon" href="favicon.ico" />
 
-        <link rel="stylesheet" type="text/css" href="/CodeMirror2/lib/codemirror.css"/>
-        <link rel="stylesheet" type="text/css" href="/CodeMirror2/theme/default.css"/>
-        <!--[if lt IE 8]><link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen, projection"/><![endif]-->
+        <link rel="stylesheet" type="text/css" href="../CodeMirror2/lib/codemirror.css"/>
+        <link rel="stylesheet" type="text/css" href="../CodeMirror2/theme/default.css"/>
+        <!--[if lt IE 8]><link rel="stylesheet" href="../css/ie.css" type="text/css" media="screen, projection"/><![endif]-->
     </head>
     <body>
         <div class="header">
             <div class="top_bar">
                 <div class="container">
-                    <a id="logo" href="/"><img alt="MarkLogic" src="/img/ml_logo.png"/></a>
+                    <a id="logo" href="/"><img alt="MarkLogic" src="../img/ml_logo.png"/></a>
                 </div>
             </div>
             {
