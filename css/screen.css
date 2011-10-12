@@ -264,6 +264,13 @@ a:focus {
   background: #A4B243;
   color: #FFF;
 }
+.btn {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
 
 /* bare code */
 
@@ -322,4 +329,8 @@ a.btn:active,
 a.btn:focus {
   background: #1679B2 url(../img/ml_btn_bg_blue_hover.png) repeat-x 0 0;
   text-decoration: none;
+}
+
+.pagination a.btn {
+	margin-bottom: 3px;
 }

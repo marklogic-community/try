@@ -13,6 +13,8 @@ div.codeContainer {
     margin: auto;
     width: 620px;
     margin-bottom: 1.5em;
+    font-size: 12px;
+    line-height: 1.5em; /* XXX - not working */
 }
 
 .code_head {

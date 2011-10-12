@@ -27,9 +27,9 @@ template:apply(
         you're interested in understanding more about indexing models and internals,
         let me suggest you read:</p>
 
-        <a href="http://developer.marklogic.com/inside-marklogic">"Inside MarkLogic Server"</a>, a long-form paper describing the MarkLogic Server
+        <p><a href="http://developer.marklogic.com/inside-marklogic">Inside MarkLogic Server</a>, a long-form paper describing the MarkLogic Server
           internals: its data model, indexing system, update model, and operational
-          behaviors.
+          behaviors.</p>
     </div>,
     (), 14
 )

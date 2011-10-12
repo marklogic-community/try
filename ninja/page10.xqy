@@ -122,7 +122,7 @@ declare function test:median(
   return $sorted[$midpoint + 1]
 }};</textarea>
 
-And here's how you import the library and use it:
+<p>And here's how you import the library and use it:</p>
 
 <textarea id="sample42" class="trymlcode input-xquery output-xml">import module namespace test = "http://try.marklogic.com/test" at "/lib/test-lib.xqy";
 
