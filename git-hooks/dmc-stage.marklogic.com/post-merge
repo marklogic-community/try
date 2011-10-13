@@ -1,0 +1,5 @@
+#!/bin/sh
+export PATH=/usr/local/bin:$PATH
+cd /space/git/try.git
+./generate.sh
+
