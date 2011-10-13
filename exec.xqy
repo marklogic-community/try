@@ -24,7 +24,7 @@ let $code := concat("declare boundary-space preserve; ", $code)
 let $results :=
     try {
         json:object((
-            "results", xdmp:quote(xdmp:eval($code, (), <time-limit xmlns="xdmp:eval">10</time-limit>))
+            "results", xdmp:quote(xdmp:eval($code))
         ))
     }
     catch ($e) {
