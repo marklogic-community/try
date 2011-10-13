@@ -72,12 +72,19 @@ tryml.setupDOM = function(block, editorId) {
 
         var submitButton = container.find("a.submit");
         submitButton.click(function() {
+
+            var inputContainer = $(container.find("div.inputContainer").get(0));
+            var loading = $("<div class='loadingoverlay'><&nbsp;</div>");
+            inputContainer.prepend(loading);
+            loading.height(inputContainer.height());
+
             var inputEditor = tryml.editors[editorId];
             $.ajax({
                 url: tryml.hostedDomain + "/exec.xqy",
                 data: { code: inputEditor.getValue() },
                 dataType: "jsonp",
                 success: function(json) {
+                    loading.remove();
                     if(json.results !== undefined) {
                         if(outputType === "html") {
                             outputContainer.html(json.results);
@@ -106,6 +113,9 @@ tryml.setupDOM = function(block, editorId) {
                         var line = inputEditor.getLine(lineNumber);
                         inputEditor.setSelection({"line": lineNumber, "ch": 0}, {"line": lineNumber, "ch": line.length});
                     }
+                },
+                error: function() {
+                    loading.remove();
                 },
                 statusCode: {
                     500: function(jqXHR, textStatus, errorThrown) {
@@ -157,6 +167,7 @@ $(document).ready(function() {
         tryml.renderBlock(block);
     });
     $("a.goToLine").click(function() {
+
         var classes = $(this).attr('class').split(/\s+/);
         $.each(classes, function(index, className) {
             var bits = className.split("-");

@@ -14,6 +14,17 @@ div.outputContainer div.CodeMirror-scroll {
     max-height: 400px;
 }
 
+div.loadingoverlay {
+    position: absolute;
+    z-index: 10;
+    width: 618px;
+    background-color: #BCBCBC;
+    background-image: url(../img/loader.gif);
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.3;
+}
+
 div.codeContainer {
     margin: auto;
     width: 620px;
