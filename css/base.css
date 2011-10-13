@@ -5,8 +5,13 @@ textarea.trymlcode {
 }
 
 div.CodeMirror-scroll {
+    min-height: 75px;
     height: auto;
     overflow: auto;
+}
+
+div.outputContainer div.CodeMirror-scroll {
+    max-height: 400px;
 }
 
 div.codeContainer {
