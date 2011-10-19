@@ -98,11 +98,19 @@ a.btn:visited {
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
   border-radius: 4px;
+  cursor: pointer;
 }
 
 a.btn:hover,
 a.btn:active,
 a.btn:focus {
   background: #1679B2 url(../img/ml_btn_bg_blue_hover.png) repeat-x 0 0;
+  text-decoration: none;
+}
+
+a.btn.disabled {
+  cursor: default;
+  background: #ccc url(../img/ml_btn_bg_disabled.png) repeat-x 0 0;
+  border: 1px solid #444;
   text-decoration: none;
 }

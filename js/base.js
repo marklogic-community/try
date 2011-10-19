@@ -72,6 +72,11 @@ tryml.setupDOM = function(block, editorId) {
 
         var submitButton = container.find("a.submit");
         submitButton.click(function() {
+            if(submitButton.hasClass("disabled")) {
+                return;
+            }
+
+            submitButton.addClass("disabled");
 
             var inputContainer = $(container.find("div.inputContainer").get(0));
             var loading = $("<div class='loadingoverlay'><&nbsp;</div>");
@@ -84,6 +89,7 @@ tryml.setupDOM = function(block, editorId) {
                 data: { code: inputEditor.getValue() },
                 dataType: "jsonp",
                 success: function(json) {
+                    submitButton.removeClass("disabled");
                     loading.remove();
                     if(json.results !== undefined) {
                         if(outputType === "html") {
@@ -115,6 +121,7 @@ tryml.setupDOM = function(block, editorId) {
                     }
                 },
                 error: function() {
+                    submitButton.removeClass("disabled");
                     loading.remove();
                 },
                 statusCode: {
