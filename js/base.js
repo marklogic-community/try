@@ -1,7 +1,3 @@
-/*
-    XXX:
-      • output multiples
-*/
 if(typeof tryml == "undefined" || !tryml) {
     tryml = {};
 }

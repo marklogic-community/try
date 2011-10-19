@@ -59,7 +59,7 @@ declare function template:apply(
         <link rel="stylesheet" href="../css/print.css" type="text/css" media="print"/>
 
         <link rel="stylesheet" href="http://try.marklogic.com:8005/css/tryml.css" type="text/css" media="screen, projection" />
-        <!--[if lt IE 8]><link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen, projection"/><![endif]-->
+        <!--[if lt IE 8]><link rel="stylesheet" href="../css/ie.css" type="text/css" media="screen, projection"/><![endif]-->
     </head>
     <body>
         <div class="header">
@@ -114,6 +114,13 @@ declare function template:apply(
     </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"><!-- --></script>
     <script src="http://try.marklogic.com:8005/js/tryml.js" type="text/javascript"><!-- --></script>
+    <script type="text/javascript">
+$(document).ready(function() {{
+    if(typeof tryml == "undefined" || !tryml) {{
+        alert("Could not contact the code execution server, some features will not be available.");
+    }}
+}});
+    </script>
 </html>
 )
 };
