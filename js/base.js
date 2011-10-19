@@ -57,7 +57,7 @@ tryml.setupDOM = function(block, editorId) {
             outputConfig = tryml.blockToParserConfig(block, "output");
         }
 
-        var container = block.replaceWithReturningNew("<div id='" + editorId + "' class='codeContainer'><div class='inputContainer'></div><div class='code_go'><a class='submit btn btn_blue'>Submit</a></div><div class='outputContainer'></div><div class='errorContainer'></div></div>");
+        var container = block.replaceWithReturningNew("<div id='" + editorId + "' class='codeContainer'><div class='inputContainer'></div><div class='code_go'><a class='submit btn btn_blue'>Run</a></div><div class='outputContainer'></div><div class='errorContainer'></div></div>");
 
         var outputContainer = container.find("div.outputContainer");
         outputContainer.hide();
