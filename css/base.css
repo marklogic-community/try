@@ -75,6 +75,7 @@ div.codeContainer {
     height: 29px;
     padding-top: 5px;
     background: #CFCFCF url(../img/ml_bg_codeblock_go.png) repeat-x 0 0;
+    position: relative;
 }
 
 
@@ -113,4 +114,46 @@ a.btn.disabled {
   background: #ccc url(../img/ml_btn_bg_disabled.png) repeat-x 0 0;
   border: 1px solid #444;
   text-decoration: none;
+}
+
+
+
+/* Switch */
+.switch {
+    display: none;
+    position: absolute;
+    top: 7px;
+    right: 16px;
+}
+
+.switch a,
+.switch a:link,
+.switch a:visited {
+    font-size: 11px;
+    display: block;
+    float: left;
+    margin-left: .5em;
+    padding: 2px 1em;
+    background: #dedede;
+    color: #999;
+    text-decoration: none;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+}
+
+.switch a:hover,
+.switch a:active,
+.switch a:focus {
+    background: #efefef;
+    color: #1679B2;
+    text-decoration: none;
+}
+
+.switch a.active {
+    background: #efefef;
+    color: #1679B2;
+    -moz-box-shadow: inset 0px 1px 3px #000;
+    -webkit-box-shadow: inset 0px 1px 3px #000;
+    box-shadow: inset 0px 1px 3px #000;
 }

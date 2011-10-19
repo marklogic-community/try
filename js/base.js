@@ -29,7 +29,7 @@ tryml.blockToParserConfig = function(block, type) {
         config.mode = "xquery";
         // config.theme = "xquery-dark";
     }
-    else if(block.hasClass(type + "-xml")) {
+    else if(block.hasClass(type + "-xml") || block.hasClass(type + "-html")) {
         config.mode = "xml";
     }
     else if(block.hasClass(type + "-json")) {
@@ -50,14 +50,18 @@ tryml.setupDOM = function(block, editorId) {
     });
 
     if(outputType !== undefined) {
-        var outputConfig = undefined;
         var outputEditor = undefined;
+		var outputConfig = tryml.blockToParserConfig(block, "output");
 
+        var newStructure;
         if(outputType !== "html") {
-            outputConfig = tryml.blockToParserConfig(block, "output");
+            newStructure = "<div id='" + editorId + "' class='codeContainer'><div class='inputContainer'></div><div class='code_go'><a class='submit btn btn_blue'>Run</a></div><div class='outputContainer'></div><div class='errorContainer'></div></div>";
+        }
+        else {
+            newStructure = "<div id='" + editorId + "' class='codeContainer'><div class='inputContainer'></div><div class='code_go'><a class='submit btn btn_blue'>Run</a><div class='switch'><a class='rendered active' href='#'>HTML</a><a class='source' href='#'>Source</a></div></div><div class='outputContainer'><div class='rendered'></div><div class='source'></div></div><div class='errorContainer'></div></div>";
         }
 
-        var container = block.replaceWithReturningNew("<div id='" + editorId + "' class='codeContainer'><div class='inputContainer'></div><div class='code_go'><a class='submit btn btn_blue'>Run</a></div><div class='outputContainer'></div><div class='errorContainer'></div></div>");
+        var container = block.replaceWithReturningNew(newStructure);
 
         var outputContainer = container.find("div.outputContainer");
         outputContainer.hide();
@@ -66,15 +70,44 @@ tryml.setupDOM = function(block, editorId) {
         if(outputType !== "html") {
             outputEditor = CodeMirror(outputContainer.get(0), outputConfig);
         }
+        else {
+            outputEditor = CodeMirror(outputContainer.find("div.source").get(0), outputConfig);
+        }
 
         var errorContainer = container.find("div.errorContainer");
         errorContainer.hide();
+
+		var updateHTMLOutput = function() {
+			if(container.find("div.switch a.rendered").hasClass("active")) {
+				container.find("div.rendered").show();
+				container.find("div.source").hide();
+			}
+			if(container.find("div.switch a.source").hasClass("active")) {
+				container.find("div.rendered").hide();
+				container.find("div.source").show();
+			}
+			outputEditor.refresh();
+		};
+
+		container.find("div.switch a").click(function() {
+			container.find("div.switch a").removeClass("active");
+			$(this).addClass("active");
+			updateHTMLOutput.call();
+		});
 
         var submitButton = container.find("a.submit");
         submitButton.click(function() {
             if(submitButton.hasClass("disabled")) {
                 return;
             }
+
+			if(outputType === "html") {
+				updateHTMLOutput.call();
+			}
+
+			updateHTMLOutput.call();
+
+			container.find("div.switch").show();
 
             submitButton.addClass("disabled");
 
@@ -93,20 +126,17 @@ tryml.setupDOM = function(block, editorId) {
                     loading.remove();
                     if(json.results !== undefined) {
                         if(outputType === "html") {
-                            outputContainer.html(json.results);
+                            outputContainer.find("div.rendered").html(json.results);
+                        }
+                        if(outputConfig.mode.name !== undefined && outputConfig.mode.name === "javascript" && outputConfig.mode.json === true) {
+                            outputEditor.setValue(JSON.stringify(JSON.parse(json.results), undefined, 2));
                         }
                         else {
-                            if(outputConfig.mode.name !== undefined && outputConfig.mode.name === "javascript" && outputConfig.mode.json === true) {
-                                outputEditor.setValue(JSON.stringify(JSON.parse(json.results), undefined, 2));
-                            }
-                            else {
-                                outputEditor.setValue(json.results);
-                            }
+                            outputEditor.setValue(json.results);
                         }
+
                         outputContainer.slideDown(undefined, function() {
-                            if(outputType !== "html") {
-                                outputEditor.refresh();
-                            }
+                            outputEditor.refresh();
                         });
                         errorContainer.slideUp();
                     }
