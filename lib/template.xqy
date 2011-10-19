@@ -55,8 +55,8 @@ declare function template:apply(
         </style>
         <link rel="shortcut icon" href="favicon.ico" />
 
-        <link rel="stylesheet" href="/css/screen.css" type="text/css" media="screen, projection" />
-        <link rel="stylesheet" href="/css/print.css" type="text/css" media="print"/>
+        <link rel="stylesheet" href="../css/screen.css" type="text/css" media="screen, projection" />
+        <link rel="stylesheet" href="../css/print.css" type="text/css" media="print"/>
 
         <link rel="stylesheet" href="http://try.marklogic.com:8005/css/tryml.css" type="text/css" media="screen, projection" />
         <!--[if lt IE 8]><link rel="stylesheet" href="/css/ie.css" type="text/css" media="screen, projection"/><![endif]-->
