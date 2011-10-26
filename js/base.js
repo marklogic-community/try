@@ -54,7 +54,7 @@ tryml.setupDOM = function(block, editorId) {
             newStructure = "<div id='" + editorId + "' class='codeContainer'><div class='inputContainer'></div><div class='code_go'><a class='submit btn btn_blue'>Run</a></div><div class='outputContainer'></div><div class='errorContainer'></div></div>";
         }
         else {
-            newStructure = "<div id='" + editorId + "' class='codeContainer'><div class='inputContainer'></div><div class='code_go'><a class='submit btn btn_blue'>Run</a><div class='switch'><a class='rendered active' href='#'>HTML</a><a class='source' href='#'>Source</a></div></div><div class='outputContainer'><div class='rendered'></div><div class='source'></div></div><div class='errorContainer'></div></div>";
+            newStructure = "<div id='" + editorId + "' class='codeContainer'><div class='inputContainer'></div><div class='code_go'><a class='submit btn btn_blue'>Run</a><div class='switch'><a class='rendered active'>HTML</a><a class='source'>Source</a></div></div><div class='outputContainer'><div class='rendered'></div><div class='source'></div></div><div class='errorContainer'></div></div>";
         }
 
         var container = block.replaceWithReturningNew(newStructure);
@@ -75,14 +75,19 @@ tryml.setupDOM = function(block, editorId) {
 
 		var updateHTMLOutput = function() {
 			if(container.find("div.switch a.rendered").hasClass("active")) {
-				container.find("div.rendered").show();
-				container.find("div.source").hide();
+				container.find("div.source").hide(500, function() {
+					container.find("div.rendered").show(500, function() {
+						outputEditor.setValue(outputEditor.getValue());
+					});
+				});
 			}
 			if(container.find("div.switch a.source").hasClass("active")) {
-				container.find("div.rendered").hide();
-				container.find("div.source").show();
+				container.find("div.rendered").hide(500, function() {
+					container.find("div.source").show(500, function() {
+						outputEditor.setValue(outputEditor.getValue());
+					});
+				});
 			}
-			outputEditor.refresh();
 		};
 
 		container.find("div.switch a").click(function() {
