@@ -10,6 +10,10 @@ div.CodeMirror-scroll {
     overflow: auto;
 }
 
+div.inputContainer.readonly div.CodeMirror-scroll {
+    min-height: 0px;
+}
+
 div.outputContainer div.CodeMirror-scroll {
     max-height: 400px;
 }
