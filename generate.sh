@@ -37,7 +37,11 @@ echo "
 " >> /tmp/tryml.js
 cat js/base.js >> /tmp/tryml.js
 
+if [ "$OSTYPE" == "darwin" ] ; then
+./jsmin.osx < /tmp/tryml.js > js/tryml.js
+else
 ./jsmin < /tmp/tryml.js > js/tryml.js
+fi
 
 rm /tmp/tryml.js
 
