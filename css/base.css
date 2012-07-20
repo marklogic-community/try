@@ -4,6 +4,11 @@ textarea.trymlcode {
     display: none;
 }
 
+div.CodeMirror {
+    font-family: Monaco; 
+    line-height: 1.5em; 
+}
+
 div.CodeMirror-scroll {
     min-height: 75px;
     height: auto;
@@ -38,7 +43,6 @@ div.codeContainer {
     width: 620px;
     margin-bottom: 1.5em;
     font-size: 12px;
-    line-height: 1.5em; /* XXX - not working */
 }
 
 .code_head {

@@ -31,6 +31,13 @@ tryml.blockToParserConfig = function(block, type) {
     else if(block.hasClass(type + "-json")) {
         config.mode = {"name": "javascript", "json": true};
     }
+    else if(block.hasClass(type + "-shell") || block.hasClass(type + "-bash")) {
+        config.mode = "shell";
+    }
+    else if(block.hasClass(type + "-java")) {
+        config.mode = "clike";
+    }
+        if (window.console) console.log(type + " mode: " + config.mode);
 
     return config;
 };

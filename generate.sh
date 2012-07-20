@@ -1,29 +1,39 @@
 echo "/* codemirror.js */
 
 " > /tmp/tryml.js
-cat CodeMirror2/lib/codemirror.js >> /tmp/tryml.js
+cat CodeMirror-2.31/lib/codemirror.js >> /tmp/tryml.js
 
 echo "/* htmlmixed.js */
 
 " >> /tmp/tryml.js
-cat CodeMirror2/mode/htmlmixed.js >> /tmp/tryml.js
+cat CodeMirror-2.31/mode/htmlmixed/htmlmixed.js >> /tmp/tryml.js
 
 echo "/* javascript.js */
 
 " >> /tmp/tryml.js
-cat CodeMirror2/mode/javascript.js >> /tmp/tryml.js
+cat CodeMirror-2.31/mode/javascript/javascript.js >> /tmp/tryml.js
 
 echo "
 /* xml.js */
 
 " >> /tmp/tryml.js
-cat CodeMirror2/mode/xml.js >> /tmp/tryml.js
+cat CodeMirror-2.31/mode/xml/xml.js >> /tmp/tryml.js
 
 echo "
 /* xquery.js */
 
 " >> /tmp/tryml.js
-cat CodeMirror2/mode/xquery.js >> /tmp/tryml.js
+cat CodeMirror-2.31/mode/xquery/xquery.js >> /tmp/tryml.js
+
+echo "
+/* java.js */
+" >> /tmp/tryml.js
+cat CodeMirror-2.31/mode/clike/clike.js >> /tmp/tryml.js
+
+echo "
+/* shell.js */
+" >> /tmp/tryml.js
+cat CodeMirror-2.31/mode/shell/shell.js >> /tmp/tryml.js
 
 echo "
 /* json2.js */
@@ -58,10 +68,5 @@ echo "
 /* codemirror.css */
 
 " >> css/tryml.css
-cat CodeMirror2/lib/codemirror.css >> css/tryml.css
+cat CodeMirror-2.31/lib/codemirror.css >> css/tryml.css
 
-echo "
-/* default.css */
-
-" >> css/tryml.css
-cat CodeMirror2/theme/default.css >> css/tryml.css
