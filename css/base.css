@@ -12,7 +12,6 @@ div.CodeMirror {
 div.CodeMirror-scroll {
     min-height: 75px;
     height: auto;
-    overflow: auto;
 }
 
 div.inputContainer.readonly div.CodeMirror-scroll {
