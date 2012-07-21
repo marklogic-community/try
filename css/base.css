@@ -5,7 +5,7 @@ textarea.trymlcode {
 }
 
 div.CodeMirror {
-    font-family: Monaco; 
+    font-family: Menlo, monospace;
     line-height: 1.5em; 
 }
 
