@@ -181,7 +181,8 @@ tryml.setupDOM = function(block, editorId) {
 
 tryml.renderBlock = function(block) {
     var config = tryml.blockToParserConfig($(block), "input");
-    config.value = block.value;
+    //config.value = block.value; sometimes on Chrome, when we're bbutton or fbutton into this page, block.value is undefined :(
+    config.value = block.value || $(block).text();
 
     var editorId = block.id;
     if(editorId === undefined) {
