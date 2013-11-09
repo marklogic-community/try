@@ -29,7 +29,7 @@ div.outputContainer div.source {
 div.loadingoverlay {
     position: absolute;
     z-index: 10;
-    width: 618px;
+    width: 97%;
     background-color: #BCBCBC;
     background-image: url(../img/loader.gif);
     background-repeat: no-repeat;
@@ -39,7 +39,7 @@ div.loadingoverlay {
 
 div.codeContainer {
     margin: auto;
-    width: 620px;
+    width: 99%;
     margin-bottom: 1.5em;
     font-size: 12px;
 }
