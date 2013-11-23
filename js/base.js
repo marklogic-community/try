@@ -37,6 +37,9 @@ tryml.blockToParserConfig = function(block, type) {
     else if(block.hasClass(type + "-java")) {
         config.mode = "clike";
     }
+    else if(block.hasClass(type + "-sparql")) {
+        config.mode = "sparql";
+    }
         if (window.console) console.log(type + " mode: " + config.mode);
 
     return config;
