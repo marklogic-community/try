@@ -36,6 +36,11 @@ echo "
 cat CodeMirror-2.31/mode/shell/shell.js >> /tmp/tryml.js
 
 echo "
+/* sparql.js */
+" >> /tmp/tryml.js
+cat CodeMirror-2.31/mode/sparql/sparql.js >> /tmp/tryml.js
+
+echo "
 /* json2.js */
 
 " >> /tmp/tryml.js
