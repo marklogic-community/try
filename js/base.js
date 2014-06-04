@@ -113,9 +113,9 @@ tryml.setupDOM = function(block, editorId) {
             if(submitButton.hasClass("disabled")) {
                 return;
             }
-            if (_gaq !== undefined) {
-                _gaq.push(['_trackEvent', 'try-run', sample]);
-            }
+//            if (_gaq !== undefined) {
+//                _gaq.push(['_trackEvent', 'try-run', sample]);
+//            }
 
 			if(outputType === "html") {
 				updateHTMLOutput.call();
@@ -138,9 +138,9 @@ tryml.setupDOM = function(block, editorId) {
                 data: { code: inputEditor.getValue() },
                 dataType: "jsonp",
                 success: function(json) {
-                    if (_gaq !== undefined) {
-                        _gaq.push(['_trackEvent', 'try-success', sample]);
-                    }
+//                    if (_gaq !== undefined) {
+//                        _gaq.push(['_trackEvent', 'try-success', sample]);
+//                    }
                     submitButton.removeClass("disabled");
                     loading.remove();
                     if(json.results !== undefined) {
@@ -170,17 +170,17 @@ tryml.setupDOM = function(block, editorId) {
                     }
                 },
                 error: function() {
-                    if (_gaq !== undefined) {
-                        _gaq.push(['_trackEvent', 'try-failure', sample]);
-                    }
+//                    if (_gaq !== undefined) {
+//                        _gaq.push(['_trackEvent', 'try-failure', sample]);
+//                    }
                     submitButton.removeClass("disabled");
                     loading.remove();
                 },
                 statusCode: {
                     500: function(jqXHR, textStatus, errorThrown) {
-                        if (_gaq !== undefined) {
-                            _gaq.push(['_trackEvent', 'try-500', sample]);
-                        }
+//                        if (_gaq !== undefined) {
+//                            _gaq.push(['_trackEvent', 'try-500', sample]);
+//                        }
                         errorContainer.slideDown();
                         outputContainer.slideUp();
                         errorContainer.html(jqXHR.responseText);
