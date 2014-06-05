@@ -113,6 +113,7 @@ tryml.setupDOM = function(block, editorId) {
             if(submitButton.hasClass("disabled")) {
                 return;
             }
+
 //            if (_gaq !== undefined) {
 //                _gaq.push(['_trackEvent', 'try-run', sample]);
 //            }
