@@ -102,6 +102,36 @@ def file_exists?(filename)
   end
 end
 
+def get_files(path, options = {}, data = [])
+  ignore_extensions = ['..', '.', '.svn', '.git', '.ds_store', 'thumbs.db']
+
+  if File.directory?(path)
+    Dir.foreach(path) do |entry|
+      next if ignore_extensions.include?(entry.downcase)
+      full_path = File.join(path, entry)
+      skip = false
+
+      options[:ignore_list].each do |ignore|
+        if full_path.match(ignore)
+          skip = true
+          break
+        end
+      end if options[:ignore_list]
+
+      next if skip == true
+
+      if File.directory?(full_path)
+        get_files(full_path, options, data)
+      else
+        data << full_path.encode("UTF-8")
+      end
+    end
+  else
+    data = [path.encode("UTF-8")]
+  end
+  data
+end
+
 class String
   unless respond_to? :try
     def try(method)
@@ -115,11 +145,11 @@ class String
   end
 
   def xquery_safe
-    REXML::Text::normalize(self).gsub(/\{/, '{{').gsub(/\}/, '}}')
+    REXML::Text::normalize(self)
   end
 
   def xquery_unsafe
-    REXML::Text::unnormalize(self).gsub(/\{\{/, '{').gsub(/\}\}/, '}')
+    REXML::Text::unnormalize(self)
   end
 
 end
@@ -136,7 +166,7 @@ class Object
   def to_b
     present? && ['true', 'TRUE', 'yes', 'YES', 'y', 'Y', 't', 'T'].include?(self)
   end
-  
+
   def optional_require(feature)
     begin
       require feature
@@ -155,6 +185,38 @@ def parse_json(body)
   else
     return body
   end
+end
+
+def parse_multipart(body)
+  if (body.match("^\r\n--"))
+    # Extract the delimiter from the response.
+    delimiter = body.split("\r\n")[1].strip
+    parts = body.split(delimiter)
+
+    # The first part will always be an empty string. Just remove it.
+    parts.shift
+    # The last part will be the "--". Just remove it.
+    parts.pop
+
+    # Get rid of part headers
+    # TODO: I think this is broken (DMC)
+    # This line is intended to just drop the zeroth item, but actually only
+    # keeps the index=1 item. Anything after that gets lost, which is bad if
+    # the file has \r\n for line separators. Need to verify that this is a
+    # problem and fix if so. See save_files_to_fs MarkLogic 8 section for an
+    # alternative approach.
+
+    parts = parts.map{ |part| part.split("\r\n\r\n")[1].strip }
+
+    # Return all parts as one long string, like we were used to.
+    return parts.join("\n")
+  else
+    return body
+  end
+end
+
+def parse_body(body)
+  parse_multipart(parse_json(body))
 end
 
 def find_jar(jarname, jarpath = "../java/")

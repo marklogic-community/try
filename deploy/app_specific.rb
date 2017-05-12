@@ -76,13 +76,13 @@ end
 #  def self.example
 #    <<-DOC.strip_heredoc
 #      Usage: ml {env} example [args] [options]
-#
+#      
 #      Runs a special example task against given environment.
-#
+#      
 #      Arguments:
 #        this    Do this
 #        that    Do that
-#
+#        
 #      Options:
 #        --whatever=value
 #    DOC
