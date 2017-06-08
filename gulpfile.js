@@ -13,7 +13,7 @@ gulp.task('clean', function() {
     .pipe(clean());
 });
 
-gulp.task('build', ['build-js', 'build-css', 'copy-xqy', 'copy-images']);
+gulp.task('build', ['build-js', 'build-css', 'copy-xqy', 'copy-images', 'copy-css']);
 
 gulp.task('copy-xqy', function() {
   return gulp.src(['src/**/*.xqy'])
@@ -23,6 +23,11 @@ gulp.task('copy-xqy', function() {
 gulp.task('copy-html', function() {
   return gulp.src(['src/index.html'])
     .pipe(gulp.dest('build'));
+});
+
+gulp.task('copy-css', function() {
+  return gulp.src(['src/css/*.css'])
+    .pipe(gulp.dest('build/css'));
 });
 
 gulp.task('copy-images', function() {
